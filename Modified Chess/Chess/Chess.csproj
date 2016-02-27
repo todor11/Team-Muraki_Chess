@@ -54,7 +54,7 @@
     <Compile Include="Contracts\IGameResult.cs" />
     <Compile Include="Contracts\IMovesCounter.cs" />
     <Compile Include="Contracts\IPawn.cs" />
-    <Compile Include="Contracts\IPawnsPositionsTemplate.cs" />
+    <Compile Include="Contracts\IGameFigurePositionsTemplate.cs" />
     <Compile Include="Contracts\IStatistic.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Enums\GameColor.cs" />
@@ -65,7 +65,7 @@
     <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Contracts\IPawnManufacturer.cs" />
     <Compile Include="Models\Pawn.cs" />
-    <Compile Include="Models\PawnsPositionsTemplate.cs" />
+    <Compile Include="Models\GameFigurePositionsTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\UserDesk.cs">
       <SubType>Form</SubType>
