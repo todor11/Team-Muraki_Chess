@@ -5,6 +5,6 @@
 
     public interface IPawnManufacturer
     {
-        IPawn ManufacturePawn(GameColor pawnColor);
+        IPawn ManufacturePawn(GameColor pawnColor, GameDirection pawnDirection);
     }
 }

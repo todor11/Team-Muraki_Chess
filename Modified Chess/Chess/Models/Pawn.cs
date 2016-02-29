@@ -10,9 +10,10 @@
     {
         private ICell cell;
 
-        public Pawn(GameColor color)
+        public Pawn(GameColor color, GameDirection direction)
         {
             this.Color = color;
+            this.Direction = direction;
             this.PosibleMoves = new List<ICell>();
             this.IsMoved = false;
         }
@@ -37,6 +38,8 @@
         }
 
         public IEnumerable<ICell> PosibleMoves { get; private set; }
+
+        public GameDirection Direction { get; }
 
         public void Move(ICell newCell)
         {

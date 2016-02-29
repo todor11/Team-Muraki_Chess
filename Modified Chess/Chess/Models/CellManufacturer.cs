@@ -12,9 +12,9 @@
 
         public IPawnManufacturer PawnManufacturer { get; private set; }
 
-        public ICell ManufactureCell(int row, int col, GameColor cellColor, GameColor pawnColor)
+        public ICell ManufactureCell(int row, int col, GameColor cellColor, GameColor pawnColor, GameDirection direction)
         {
-            var currentPawn = this.PawnManufacturer.ManufacturePawn(pawnColor);
+            var currentPawn = this.PawnManufacturer.ManufacturePawn(pawnColor, direction);
             return new Cell(row, col, cellColor, currentPawn);
         }
 

@@ -34,7 +34,9 @@
                     }
                     else
                     {
-                        this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor, currentPawnColor);
+                        GameDirection currentPawnDirection =
+                            this.gameFigurePositionsTemplate.PawnDirections[currentPawnColor];
+                        this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor, currentPawnColor, currentPawnDirection);
                     }
                 }
             }

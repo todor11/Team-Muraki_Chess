@@ -14,6 +14,8 @@
         
         IEnumerable<ICell> PosibleMoves { get; }
 
+        GameDirection Direction { get; }
+
         void Move(ICell newCell);
     }
 }
