@@ -21,7 +21,7 @@
 
         public ICell[][] Cells { get; private set; }
 
-        public IEnumerable<IPawn> Pawns { get; }
+        public IPawn[] Pawns { get; }
 
         public ICellManufacturer CellFactory { get; private set; }
 
@@ -35,6 +35,7 @@
 
         public void Init()
         {
+            int currentPawrIndex = 0;
             for (int i = 0; i < this.gameFigurePositionsTemplate.CellTemplate.Length; i++)
             {
                 this.Cells[i] = new ICell[this.gameFigurePositionsTemplate.CellTemplate[i].Length];
@@ -51,9 +52,16 @@
                         GameDirection currentPawnDirection =
                             this.gameFigurePositionsTemplate.PawnDirections[currentPawnColor];
                         this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor, currentPawnColor, currentPawnDirection);
+                        this.Pawns[currentPawrIndex] = this.Cells[i][j].Pawn;
+                        currentPawrIndex++;
                     }
                 }
             }
+        }
+
+        public void UpdatePawnsPosibleCells()
+        {
+            //TODO
         }
     }
 }

@@ -6,12 +6,14 @@
     {
         ICell[][] Cells { get; }
 
-        IEnumerable<IPawn> Pawns { get; }
+        IPawn[] Pawns { get; }
 
         ICellManufacturer CellFactory { get; }
 
         IGameFigurePositionsTemplate GameTemplate { get; }
 
         void Init();
+
+        void UpdatePawnsPosibleCells();
     }
 }

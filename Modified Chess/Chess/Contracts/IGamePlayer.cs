@@ -8,6 +8,6 @@
 
         IEnumerable<IPawn> Pawns { get; }
 
-        void MakeMove();
+        void MakeNextMove();
     }
 }

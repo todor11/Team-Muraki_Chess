@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Chess.Contracts;
 
@@ -45,15 +46,19 @@
             else
             {
                 this.gameTurnsCounter++;
+                //Change activePlayer.......
+                //
                 //TODO
+                //
+                this.ActivePlayer.MakeNextMove();
             }
         }
 
         public void MovePawnFromTo(ICell from, ICell to)
         {
             //TODO move pawn from cell to cell
-
-
+            
+            this.PreviousMoves.Push(new ICell[] { from, to });
             this.Run();
         }
 

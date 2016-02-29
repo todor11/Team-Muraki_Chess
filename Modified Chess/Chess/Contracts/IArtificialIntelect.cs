@@ -4,7 +4,7 @@
 
     public interface IArtificialIntelect
     {
-        IGameBoard GameBoard { get; }
+        IEngine GameEngine { get; }
 
         IEnumerable<ICell> GetMoveFromTo();
     }
