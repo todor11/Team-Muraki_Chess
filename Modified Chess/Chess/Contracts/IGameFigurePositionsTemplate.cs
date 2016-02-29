@@ -9,5 +9,7 @@
         int[][] PawnTemplate { get; }
 
         int[][] CellTemplate { get; }
+
+        Dictionary<GameColor, GameDirection> PawnDirections { get; }
     }
 }

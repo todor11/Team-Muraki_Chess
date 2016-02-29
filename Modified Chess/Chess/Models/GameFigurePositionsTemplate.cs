@@ -11,6 +11,8 @@
 
         private readonly int[][] cellTemplate;
 
+        private readonly Dictionary<GameColor, GameDirection> pawnDirections;
+
         public GameFigurePositionsTemplate()
         {
             this.pawnTemplate = new[] {
@@ -34,6 +36,10 @@
                                                             new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
                                                             new int[] { 2, 1, 2, 1, 2, 1, 2, 1 }
                                                             };
+
+            this.pawnDirections = new Dictionary<GameColor, GameDirection>();
+            this.pawnDirections.Add(GameColor.White, GameDirection.Up);
+            this.pawnDirections.Add(GameColor.Black, GameDirection.Down);
         }
 
         public int[][] PawnTemplate
@@ -49,6 +55,14 @@
             get
             {
                 return this.cellTemplate;
+            }
+        }
+
+        public Dictionary<GameColor, GameDirection> PawnDirections
+        {
+            get
+            {
+                return this.pawnDirections;
             }
         }
     }

@@ -1,5 +1,8 @@
 ﻿namespace Chess.Models
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Chess.Contracts;
     using Chess.Enums;
 
@@ -12,12 +15,23 @@
             this.gameFigurePositionsTemplate = gameFigurePositionsTemplate;
             this.Cells = new ICell[this.gameFigurePositionsTemplate.PawnTemplate.Length][];
             this.CellFactory = cellManufacturer;
+            this.Pawns = new IPawn[this.gameFigurePositionsTemplate.PawnTemplate.Select(n => n.Where(el => el != 0).Count()).Sum()];
             this.Init();
         }
 
         public ICell[][] Cells { get; private set; }
 
+        public IEnumerable<IPawn> Pawns { get; }
+
         public ICellManufacturer CellFactory { get; private set; }
+
+        public IGameFigurePositionsTemplate GameTemplate
+        {
+            get
+            {
+                return this.gameFigurePositionsTemplate;
+            }
+        }
 
         public void Init()
         {

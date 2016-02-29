@@ -8,9 +8,19 @@
 
         IFormDesk UserForm { get; set; }
 
-        IEnumerable<string> PreviousMoves { get; }
+        Stack<IEnumerable<ICell>> PreviousMoves { get; }
 
-        bool ActivePlayer { get; set; }
+        IGamePlayer ActivePlayer { get; }
+
+        IEnumerable<IGamePlayer> Players { get; }
+
+        int GameTurnsCounter { get; }
+
+        bool IsGameFinished { get; }
+
+        void Run();
+
+        void MovePawnFromTo(ICell from, ICell to);
 
         void Undo();
     }

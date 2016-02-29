@@ -5,9 +5,9 @@
 
     public class PawnManufacturer : IPawnManufacturer
     {
-        public IPawn ManufacturePawn(GameColor pawnColor)
+        public IPawn ManufacturePawn(GameColor pawnColor, GameDirection pawnDirection)
         {
-            return new Pawn(pawnColor);
+            return new Pawn(pawnColor, pawnDirection);
         }
     }
 }

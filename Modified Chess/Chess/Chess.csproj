@@ -46,17 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IArtificialIntelect.cs" />
     <Compile Include="Contracts\ICell.cs" />
     <Compile Include="Contracts\ICellManufacturer.cs" />
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IFormDesk.cs" />
     <Compile Include="Contracts\IGameBoard.cs" />
+    <Compile Include="Contracts\IGamePlayer.cs" />
     <Compile Include="Contracts\IGameResult.cs" />
     <Compile Include="Contracts\IMovesCounter.cs" />
     <Compile Include="Contracts\IPawn.cs" />
     <Compile Include="Contracts\IGameFigurePositionsTemplate.cs" />
     <Compile Include="Contracts\IStatistic.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Enums\GameDirection.cs" />
     <Compile Include="Enums\GameColor.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Models\CellManufacturer.cs" />
