@@ -14,11 +14,12 @@
         {
             this.Color = color;
             this.PosibleMoves = new List<ICell>();
+            this.IsMoved = false;
         }
 
-        public GameColor Color { get; set; }
+        public GameColor Color { get; private set; }
 
-        public bool IsMoved { get; set; }
+        public bool IsMoved { get; private set; }
 
         public ICell Cell
         {
@@ -39,7 +40,8 @@
 
         public void Move(ICell newCell)
         {
-            throw new NotImplementedException();
+            this.IsMoved = true;
+            //TODO
         }
 
         private void UpdatePosibleMoves()

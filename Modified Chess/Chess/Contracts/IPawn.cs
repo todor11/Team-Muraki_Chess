@@ -6,9 +6,9 @@
 
     public interface IPawn
     {
-        GameColor Color { get; set; }
+        GameColor Color { get; }
 
-        bool IsMoved { get; set; }
+        bool IsMoved { get; }
 
         ICell Cell { get; set; }
         

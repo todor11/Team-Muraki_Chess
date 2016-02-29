@@ -6,8 +6,8 @@
 
     public interface IGameFigurePositionsTemplate
     {
-        int[][] PawnColorTemplate { get; }
+        int[][] PawnTemplate { get; }
 
-        int[][] CellColorTemplate { get; }
+        int[][] CellTemplate { get; }
     }
 }
