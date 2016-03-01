@@ -63,7 +63,7 @@
         {
             foreach (var pawn in this.Pawns)
             {
-                pawn.UpdatePosibleMoves(this.gameFigurePositionsTemplate.PawnTemplate);
+                pawn.UpdatePosibleMoves(this.Cells);
             }
         }
     }

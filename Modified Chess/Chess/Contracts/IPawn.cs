@@ -18,6 +18,6 @@
 
         void Move(ICell newCell);
 
-        void UpdatePosibleMoves(int[][] pawnTemplate);
+        void UpdatePosibleMoves(ICell[][] allCells);
     }
 }
