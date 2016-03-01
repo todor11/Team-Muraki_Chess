@@ -12,7 +12,7 @@
 
         IGamePlayer ActivePlayer { get; }
 
-        IEnumerable<IGamePlayer> Players { get; }
+        IGamePlayer[] Players { get; }
 
         int GameTurnsCounter { get; }
 

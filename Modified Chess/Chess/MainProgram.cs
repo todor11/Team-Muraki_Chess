@@ -20,10 +20,11 @@
             var cellManufacturer = new CellManufacturer(pawnManufacturer);
             var gameBoard = new GameBoard(gameFigurePositionsTemplate, cellManufacturer);
             var engine = new Engine(gameBoard);
-
+            engine.Run();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UserDesk(engine));
+            
         }
     }
 }

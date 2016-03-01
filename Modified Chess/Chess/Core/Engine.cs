@@ -14,6 +14,7 @@
         {
             this.GameBoard = gameBoard;
             this.gameTurnsCounter = 0;
+            this.Players = gameBoard.GameTemplate.Players;
         }
 
         public IGameBoard GameBoard { get; }
@@ -22,9 +23,9 @@
 
         public Stack<IEnumerable<ICell>> PreviousMoves { get; }
 
-        public IGamePlayer ActivePlayer { get; }
+        public IGamePlayer ActivePlayer { get; private set; }
 
-        public IEnumerable<IGamePlayer> Players { get; }
+        public IGamePlayer[] Players { get; }
 
         public int GameTurnsCounter
         {
@@ -54,8 +55,8 @@
 
         public void MovePawnFromTo(ICell from, ICell to)
         {
-            //TODO move pawn from cell to cell
-            
+            var pawn = from.Pawn;
+            pawn.Move(to);
             this.PreviousMoves.Push(new ICell[] { from, to });
             this.Run();
         }
@@ -72,7 +73,8 @@
 
         private void UpdateActivePlayer()
         {
-            //TODO
+            int currentPlayerIndex = (this.gameTurnsCounter - 1) % this.Players.Length;
+            this.ActivePlayer = this.Players[currentPlayerIndex];
         }
     }
 }

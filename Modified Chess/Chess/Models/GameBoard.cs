@@ -53,6 +53,16 @@
                             this.gameFigurePositionsTemplate.PawnDirections[currentPawnColor];
                         this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor, currentPawnColor, currentPawnDirection);
                         this.Pawns[currentPawrIndex] = this.Cells[i][j].Pawn;
+                        
+                        for (int k = 0; k < this.gameFigurePositionsTemplate.Players.Length; k++)
+                        {
+                            if (this.gameFigurePositionsTemplate.Players[k].PawnColor == currentPawnColor)
+                            {
+                                this.gameFigurePositionsTemplate.Players[k].Pawns.Add(this.Cells[i][j].Pawn);
+                                break;
+                            }
+                        }
+
                         currentPawrIndex++;
                     }
                 }

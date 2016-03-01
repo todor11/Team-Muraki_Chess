@@ -40,6 +40,11 @@
             this.pawnDirections = new Dictionary<GameColor, GameDirection>();
             this.pawnDirections.Add(GameColor.White, GameDirection.Up);
             this.pawnDirections.Add(GameColor.Black, GameDirection.Down);
+            this.Players = new IGamePlayer[]
+                               {
+                                   new Player(GameColor.White), 
+                                   new Player(GameColor.Black)
+                               };
         }
 
         public int[][] PawnTemplate
@@ -65,5 +70,7 @@
                 return this.pawnDirections;
             }
         }
+
+        public IGamePlayer[] Players { get; }
     }
 }

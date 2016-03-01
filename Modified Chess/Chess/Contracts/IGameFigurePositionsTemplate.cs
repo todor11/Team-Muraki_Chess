@@ -11,5 +11,7 @@
         int[][] CellTemplate { get; }
 
         Dictionary<GameColor, GameDirection> PawnDirections { get; }
+
+        IGamePlayer[] Players { get; }
     }
 }
