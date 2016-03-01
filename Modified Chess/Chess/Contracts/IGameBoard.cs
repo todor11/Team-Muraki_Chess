@@ -14,6 +14,6 @@
 
         void Init();
 
-        void UpdatePawnsPosibleCells();
+        void NotifyPawnsForChanges();
     }
 }

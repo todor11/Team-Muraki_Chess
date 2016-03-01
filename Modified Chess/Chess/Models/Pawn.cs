@@ -33,7 +33,6 @@
             {
                 //TODO Validate , cell must be in posible moves
                 this.cell = value;
-                this.UpdatePosibleMoves();
             }
         }
 
@@ -47,10 +46,18 @@
             //TODO
         }
 
-        private void UpdatePosibleMoves()
+        public void UpdatePosibleMoves(int[][] pawnTemplate)
         {
+            List<ICell> newPosibleMoves = new List<ICell>();
+            switch (this.Direction)
+            {
+                case GameDirection.Up:
+                case GameDirection.Down:  
+
+                    break;
+            }
+
             //TODO
         }
-        
     }
 }

@@ -17,5 +17,7 @@
         GameDirection Direction { get; }
 
         void Move(ICell newCell);
+
+        void UpdatePosibleMoves(int[][] pawnTemplate);
     }
 }

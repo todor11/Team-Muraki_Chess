@@ -59,9 +59,12 @@
             }
         }
 
-        public void UpdatePawnsPosibleCells()
+        public void NotifyPawnsForChanges()
         {
-            //TODO
+            foreach (var pawn in this.Pawns)
+            {
+                pawn.UpdatePosibleMoves(this.gameFigurePositionsTemplate.PawnTemplate);
+            }
         }
     }
 }

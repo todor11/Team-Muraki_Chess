@@ -46,7 +46,7 @@
             else
             {
                 this.gameTurnsCounter++;
-                //Change activePlayer.......
+                this.UpdateActivePlayer();
                 //
                 //TODO
                 //
@@ -70,6 +70,11 @@
         private bool CheckIsGameFinished()
         {
             return false; // TODO
+        }
+
+        private void UpdateActivePlayer()
+        {
+            //TODO
         }
     }
 }

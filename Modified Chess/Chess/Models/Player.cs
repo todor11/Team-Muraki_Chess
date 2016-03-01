@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using Chess.Contracts;
+
     public class Player : IGamePlayer
     {
         //TODO
