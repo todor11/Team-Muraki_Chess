@@ -4,8 +4,8 @@
 
     public interface IArtificialIntelect
     {
-        IEngine GameEngine { get; }
+        IEngine Engine { get; }
 
-        IEnumerable<ICell> GetMoveFromTo();
+        void GetMoveFromTo();
     }
 }

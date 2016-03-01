@@ -46,10 +46,8 @@
             else
             {
                 this.gameTurnsCounter++;
+                this.GameBoard.NotifyPawnsForChanges();
                 this.UpdateActivePlayer();
-                //
-                //TODO
-                //
                 this.ActivePlayer.MakeNextMove();
             }
         }

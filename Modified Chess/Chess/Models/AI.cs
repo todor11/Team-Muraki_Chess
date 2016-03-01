@@ -5,12 +5,17 @@
     using Chess.Contracts;
     public class AI : Player, IArtificialIntelect
     {
-        //TODO
-        public IEngine GameEngine { get; }
+        public IEngine Engine { get; }
 
-        public IEnumerable<ICell> GetMoveFromTo()
+        public void GetMoveFromTo()
         {
-            throw new System.NotImplementedException();
+            //TODO
+        }
+
+        public override void MakeNextMove()
+        {
+            this.GetMoveFromTo();
+            this.GetMoveFromTo();
         }
     }
 }

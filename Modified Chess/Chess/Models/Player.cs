@@ -11,9 +11,8 @@
 
         public IEnumerable<IPawn> Pawns { get; }
 
-        public void MakeNextMove()
+        public virtual void MakeNextMove()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
