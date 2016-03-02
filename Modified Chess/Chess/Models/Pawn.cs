@@ -9,9 +9,9 @@
 
     public class Pawn : IPawn
     {
-        private ICell cell;
+        private readonly IList<ICell> posibleMoves;
 
-        private IList<ICell> posibleMoves;
+        private ICell cell;
 
         public Pawn(GameColor color, GameDirection direction)
         {

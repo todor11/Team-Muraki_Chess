@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using Chess.Contracts;
+    using Chess.Enums;
 
     public class Engine : IEngine
     {
@@ -49,6 +51,7 @@
             {
                 this.gameTurnsCounter++;
                 this.GameBoard.NotifyPawnsForChanges();
+                this.SetThisEngineToAIIfExist();
                 this.UpdateActivePlayer();
                 this.ActivePlayer.MakeNextMove();
             }
@@ -69,13 +72,63 @@
 
         private bool CheckIsGameFinished()
         {
-            return false; // TODO
+            //check first row
+            int firstRowLenght = this.GameBoard.Cells[0].Length;
+            for (int i = 0; i < firstRowLenght; i++)
+            {
+                if (!this.GameBoard.Cells[0][i].IsFree && this.GameBoard.Cells[0][i].Pawn.Direction == GameDirection.Up)
+                {
+                    return true;
+                }
+            }
+
+            //check last row
+            int maxRowIndex = this.GameBoard.Cells.Length - 1;
+            int lastRowLenght = this.GameBoard.Cells[maxRowIndex].Length;
+            for (int i = 0; i < lastRowLenght; i++)
+            {
+                if (!this.GameBoard.Cells[maxRowIndex][i].IsFree && this.GameBoard.Cells[maxRowIndex][i].Pawn.Direction == GameDirection.Down)
+                {
+                    return true;
+                }
+            }
+
+            //check first col
+            for (int i = 1; i < maxRowIndex; i++)
+            {
+                if (!this.GameBoard.Cells[i][0].IsFree && this.GameBoard.Cells[i][0].Pawn.Direction == GameDirection.Left)
+                {
+                    return true;
+                }
+            }
+
+            //check last col
+            for (int i = 1; i < maxRowIndex; i++)
+            {
+                if (!this.GameBoard.Cells[i][this.GameBoard.Cells[i].Length - 1].IsFree && 
+                    this.GameBoard.Cells[i][this.GameBoard.Cells[i].Length - 1].Pawn.Direction == GameDirection.Right)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void UpdateActivePlayer()
         {
             int currentPlayerIndex = (this.gameTurnsCounter - 1) % this.Players.Length;
             this.ActivePlayer = this.Players[currentPlayerIndex];
+        }
+
+        private void SetThisEngineToAIIfExist()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            //TODO
+            foreach (var player in this.GameBoard.GameTemplate.Players)
+            {
+                
+            }
         }
     }
 }
