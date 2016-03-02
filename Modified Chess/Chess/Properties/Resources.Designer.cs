@@ -83,9 +83,29 @@ namespace Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap red_pawn {
+            get {
+                object obj = ResourceManager.GetObject("red-pawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap white_pawn {
             get {
                 object obj = ResourceManager.GetObject("white-pawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yellow_pawn {
+            get {
+                object obj = ResourceManager.GetObject("yellow-pawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

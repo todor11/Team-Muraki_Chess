@@ -32,8 +32,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.boardImage = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.boardImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.boardImage)).BeginInit();
             this.SuspendLayout();
             // 

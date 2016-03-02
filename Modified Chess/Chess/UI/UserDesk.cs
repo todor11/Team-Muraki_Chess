@@ -75,11 +75,19 @@
                         {
                             newPawn.Image = global::Chess.Properties.Resources.black_pawn;
                         }
-                        else
+                        else if(pawnColor == GameColor.White)
                         {
                             newPawn.Image = global::Chess.Properties.Resources.white_pawn;
                         }
-                        
+                        else if (pawnColor == GameColor.Red)
+                        {
+                            newPawn.Image = global::Chess.Properties.Resources.red_pawn;
+                        }
+                        else if (pawnColor == GameColor.Yellow)
+                        {
+                            newPawn.Image = global::Chess.Properties.Resources.yellow_pawn;
+                        }
+
                         newPawn.Location = new System.Drawing.Point(
                             FirstPawnStartPointX + (j * this.pawnPositionStepX), FirstPawnStartPointY + (i * this.pawnPositionStepY));
                         newPawn.Name = i + "," + j;

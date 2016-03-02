@@ -118,13 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="white-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\white-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chessboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\chessboard.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="black-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\black-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="chessboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\chessboard.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="white-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\white-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yellow-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yellow-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
