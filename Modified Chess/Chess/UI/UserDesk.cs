@@ -22,7 +22,7 @@
 
         private const int FirstPawnStartPointX = 0;
 
-        private const int FirstPawnStartPointY = 2;
+        private const int FirstPawnStartPointY = 0;
 
         private readonly int pawnPositionStepX;
 
