@@ -30,11 +30,15 @@
 
         private readonly Dictionary<GameColor, List<PictureBox>> pawnsPictureBoxsDictionary = new Dictionary<GameColor, List<PictureBox>>();
 
+        private readonly HashSet<string> activePawnPosibleCells;
+
         private Point firstPoint;
 
         private Point distanceBetweenPreviousAndTemporary;
 
         private Point temp;
+
+        private Point pawnStartPoint;
 
         public UserDesk(IEngine engine)
         {
@@ -42,7 +46,8 @@
             this.Engine.UserForm = this;
             this.pawnPositionStepX = BoardSizeX / this.Engine.GameBoard.Cells.Length;
             this.pawnPositionStepY = BoardSizeY / this.Engine.GameBoard.Cells[0].Length;
-            
+            this.activePawnPosibleCells = new HashSet<string>();
+
             this.InitializeComponent();
             
             this.Init();
@@ -77,7 +82,7 @@
                         
                         newPawn.Location = new System.Drawing.Point(
                             FirstPawnStartPointX + (j * this.pawnPositionStepX), FirstPawnStartPointY + (i * this.pawnPositionStepY));
-                        newPawn.Name = pawnColor.ToString() + i + j;//TODO
+                        newPawn.Name = i + "," + j;
                         newPawn.Size = new System.Drawing.Size(this.pawnPositionStepX, this.pawnPositionStepY);
                         newPawn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         newPawn.TabIndex = 1;
@@ -122,47 +127,6 @@
             }
         }
 
-        private void PictureBoxMouseUp(object sender, MouseEventArgs e)
-        {
-            var currPlayerPictureBoxes = this.pawnsPictureBoxsDictionary[this.Engine.ActivePlayer.PawnColor];
-            if (e.Button == MouseButtons.Left)
-            {
-                this.temp = MousePosition;
-                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
-                PictureBox currentPictureBox = sender as PictureBox;
-                int newCurrentPictureBoxLocationX = ((currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X +
-                    (pawnPositionStepX / 2)) - FirstPawnStartPointX) / pawnPositionStepX;
-                newCurrentPictureBoxLocationX = (newCurrentPictureBoxLocationX * pawnPositionStepX) + FirstPawnStartPointX;
-                int newCurrentPictureBoxLocationY = ((currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y +
-                    (pawnPositionStepY / 2)) - FirstPawnStartPointY) / pawnPositionStepY;
-                newCurrentPictureBoxLocationY = (newCurrentPictureBoxLocationY * pawnPositionStepY) + FirstPawnStartPointY;
-
-                currentPictureBox.Location = new Point(
-                    newCurrentPictureBoxLocationX,
-                    newCurrentPictureBoxLocationY);
-
-                this.firstPoint = this.temp;
-
-                this.RemoveEventHolders();
-            }
-        }
-
-        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
-        {
-            var currPlayerPictureBoxes = this.pawnsPictureBoxsDictionary[this.Engine.ActivePlayer.PawnColor];
-            if (e.Button == MouseButtons.Left)
-            {
-                this.temp = MousePosition;
-                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
-                PictureBox currentPictureBox = sender as PictureBox;
-                currentPictureBox.Location = new Point(
-                    currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X,
-                    currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y);
-
-                this.firstPoint = this.temp;
-            }
-        }
-
         private void PictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             var currPlayerPictureBoxes = this.pawnsPictureBoxsDictionary[this.Engine.ActivePlayer.PawnColor];
@@ -173,7 +137,17 @@
                 PictureBox currentPictureBox = sender as PictureBox;
                 this.boardImage.Controls.Clear();
                 this.boardImage.Controls.Add(currentPictureBox);
-
+                
+                this.pawnStartPoint = currentPictureBox.Location;
+                this.activePawnPosibleCells.Clear();
+                string[] cellCoordinates = currentPictureBox.Name.Split(',');
+                var currantPawn =
+                    this.Engine.GameBoard.Cells[int.Parse(cellCoordinates[0])][int.Parse(cellCoordinates[1])].Pawn;
+                foreach (var cell in currantPawn.PosibleMoves)
+                {
+                    this.activePawnPosibleCells.Add(cell.Row + "," + cell.Col);
+                }
+                
                 foreach (List<PictureBox> setOfEachPlayerPictureBoxes in this.pawnsPictureBoxsDictionary.Values)
                 {
                     if (setOfEachPlayerPictureBoxes != currPlayerPictureBoxes)
@@ -194,6 +168,60 @@
                         }
                     }
                 }
+            }
+        }
+
+        private void PictureBoxMouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.temp = MousePosition;
+                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
+                PictureBox currentPictureBox = sender as PictureBox;
+                int newCol = ((currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X +
+                    (this.pawnPositionStepX / 2)) - FirstPawnStartPointX) / this.pawnPositionStepX;
+                int newCurrentPictureBoxLocationX = (newCol * this.pawnPositionStepX) + FirstPawnStartPointX;
+                int newRow = ((currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y +
+                    (this.pawnPositionStepY / 2)) - FirstPawnStartPointY) / this.pawnPositionStepY;
+                int newCurrentPictureBoxLocationY = (newRow * this.pawnPositionStepY) + FirstPawnStartPointY;
+
+                //
+                string newStringPosition = newRow + "," + newCol;
+                if (this.activePawnPosibleCells.Contains(newStringPosition))
+                {
+                    currentPictureBox.Location = new Point(
+                    newCurrentPictureBoxLocationX,
+                    newCurrentPictureBoxLocationY);
+
+                    string[] splitedStringPictureBoxName = currentPictureBox.Name.Split(',');
+                    int oldRow = int.Parse(splitedStringPictureBoxName[0]);
+                    int oldCol = int.Parse(splitedStringPictureBoxName[1]);
+                    currentPictureBox.Name = newRow + "," + newCol;
+                    this.firstPoint = this.temp;
+                    this.RemoveEventHolders();
+                    this.Engine.MovePawnFromTo(this.Engine.GameBoard.Cells[oldRow][oldCol], this.Engine.GameBoard.Cells[newRow][newCol]);
+
+                    this.SetEventHolders();
+                }
+                else
+                {
+                    currentPictureBox.Location = this.pawnStartPoint;
+                }
+            }
+        }
+
+        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.temp = MousePosition;
+                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
+                PictureBox currentPictureBox = sender as PictureBox;
+                currentPictureBox.Location = new Point(
+                    currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X,
+                    currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y);
+
+                this.firstPoint = this.temp;
             }
         }
     }

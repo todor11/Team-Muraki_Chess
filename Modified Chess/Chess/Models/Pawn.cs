@@ -11,11 +11,13 @@
     {
         private ICell cell;
 
+        private IList<ICell> posibleMoves;
+
         public Pawn(GameColor color, GameDirection direction)
         {
             this.Color = color;
             this.Direction = direction;
-            this.PosibleMoves = new List<ICell>();
+            this.posibleMoves = new List<ICell>();
             this.IsMoved = false;
         }
 
@@ -36,24 +38,31 @@
             }
         }
 
-        public IEnumerable<ICell> PosibleMoves { get; private set; }
+        public IEnumerable<ICell> PosibleMoves
+        {
+            get
+            {
+                return this.posibleMoves;
+            }
+        }
 
         public GameDirection Direction { get; }
 
         public void Move(ICell newCell)
         {
-            if (newCell.IsFree && this.PosibleMoves.Contains(newCell))
+            if (newCell.IsFree && this.posibleMoves.Contains(newCell))
             {
                 this.IsMoved = true;
                 this.Cell.IsFree = true;
                 newCell.IsFree = false;
+                newCell.Pawn = this;
                 this.Cell = newCell;
             }
         }
 
         public void UpdatePosibleMoves(ICell[][] allCells)
         {
-            List<ICell> newPosibleMoves = new List<ICell>();
+            this.posibleMoves.Clear();
             int currentRow = this.Cell.Row;
             int currentCol = this.Cell.Col;
             switch (this.Direction)
@@ -64,29 +73,29 @@
                         (currentRow + (int)this.Direction < allCells.Length) && 
                         allCells[currentRow + (int)this.Direction][currentCol].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow + (int)this.Direction][currentCol]);
+                        this.posibleMoves.Add(allCells[currentRow + (int)this.Direction][currentCol]);
                         if ((!this.IsMoved) && (currentRow + (int)this.Direction + (int)this.Direction >= 0) &&
                             (currentRow + (int)this.Direction + (int)this.Direction < allCells.Length) && 
                             allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol].IsFree)
                         {
-                            newPosibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol]);
+                            this.posibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol]);
                         }
                     }
 
                     if ((currentCol - 2 >= 0) && (currentCol - 2 < allCells[currentRow + (int)this.Direction + (int)this.Direction].Length) &&
                         allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol - 2].IsFree &&
                         (currentCol - 1 >= 0) && (currentCol - 1 < allCells[currentRow + (int)this.Direction].Length) &&
-                        !allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol - 1].IsFree)
+                        !allCells[currentRow + (int)this.Direction][currentCol - 1].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol - 2]);
+                        this.posibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol - 2]);
                     }
 
                     if ((currentCol + 2 >= 0) && (currentCol + 2 < allCells[currentRow + (int)this.Direction + (int)this.Direction].Length) &&
                         allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol + 2].IsFree &&
                         (currentCol + 1 >= 0) && (currentCol + 1 < allCells[currentRow + (int)this.Direction].Length) &&
-                        !allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol + 1].IsFree)
+                        !allCells[currentRow + (int)this.Direction][currentCol + 1].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol + 2]);
+                        this.posibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol + 2]);
                     }
                     break;
 
@@ -97,12 +106,12 @@
                         (currentCol + direction < allCells[currentRow].Length) &&
                         allCells[currentRow][currentCol + direction].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow][currentCol + direction]);
+                        this.posibleMoves.Add(allCells[currentRow][currentCol + direction]);
                         if ((!this.IsMoved) && (currentCol + direction + direction >= 0) &&
                             (currentCol + direction + direction < allCells[currentRow].Length) &&
                             allCells[currentRow][currentCol + direction + direction].IsFree)
                         {
-                            newPosibleMoves.Add(allCells[currentRow][currentCol + direction + direction]);
+                            this.posibleMoves.Add(allCells[currentRow][currentCol + direction + direction]);
                         }
                     }
 
@@ -111,7 +120,7 @@
                         (currentRow - 1 >= 0) && (currentRow - 1 < allCells.Length) &&
                         !allCells[currentRow - 1][currentCol + direction].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow - 2][currentCol + direction + direction]);
+                        this.posibleMoves.Add(allCells[currentRow - 2][currentCol + direction + direction]);
                     }
 
                     if ((currentRow + 2 >= 0) && (currentRow + 2 < allCells.Length) &&
@@ -119,12 +128,10 @@
                         (currentRow + 1 >= 0) && (currentRow + 1 < allCells.Length) &&
                         !allCells[currentRow + 1][currentCol + direction].IsFree)
                     {
-                        newPosibleMoves.Add(allCells[currentRow + 2][currentCol + direction + direction]);
+                        this.posibleMoves.Add(allCells[currentRow + 2][currentCol + direction + direction]);
                     }
                     break;
             }
-
-            this.PosibleMoves = newPosibleMoves;
         }
     }
 }

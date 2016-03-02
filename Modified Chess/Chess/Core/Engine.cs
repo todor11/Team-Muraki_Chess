@@ -15,6 +15,7 @@
             this.GameBoard = gameBoard;
             this.gameTurnsCounter = 0;
             this.Players = gameBoard.GameTemplate.Players;
+            this.PreviousMoves = new Stack<IEnumerable<ICell>>();
         }
 
         public IGameBoard GameBoard { get; }
