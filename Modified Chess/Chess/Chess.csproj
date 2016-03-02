@@ -109,7 +109,9 @@
   <ItemGroup>
     <Content Include="Resources\Images\black-pawn.png" />
     <Content Include="Resources\Images\chessboard.jpg" />
+    <Content Include="Resources\Images\red-pawn.png" />
     <Content Include="Resources\Images\white-pawn.png" />
+    <Content Include="Resources\Images\yellow-pawn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
