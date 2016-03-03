@@ -7,6 +7,7 @@
 
     using Chess.Contracts;
     using Chess.Enums;
+    using Chess.Atributes;
 
     public class Engine : IEngine
     {
@@ -18,6 +19,7 @@
             this.gameTurnsCounter = 0;
             this.Players = gameBoard.GameTemplate.Players;
             this.PreviousMoves = new Stack<IEnumerable<ICell>>();
+            this.SetThisEngineToAIIfExist();
         }
 
         public IGameBoard GameBoard { get; }
@@ -51,7 +53,6 @@
             {
                 this.gameTurnsCounter++;
                 this.GameBoard.NotifyPawnsForChanges();
-                this.SetThisEngineToAIIfExist();
                 this.UpdateActivePlayer();
                 this.ActivePlayer.MakeNextMove();
             }
@@ -123,11 +124,19 @@
 
         private void SetThisEngineToAIIfExist()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            //TODO
+            var itemTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(type => type.CustomAttributes
+                    .Any(a => a.AttributeType == typeof(ArtificialIntelectAttribute)))
+                    .ToArray();
+            
             foreach (var player in this.GameBoard.GameTemplate.Players)
             {
-                
+                if (itemTypes.Contains(player.GetType()))
+                {
+                    var artificialIntelect = player as IArtificialIntelect;
+                    artificialIntelect.Engine = this;
+                }
             }
         }
     }

@@ -38,7 +38,7 @@
             }
         }
 
-        public IEnumerable<ICell> PosibleMoves
+        public IList<ICell> PosibleMoves
         {
             get
             {

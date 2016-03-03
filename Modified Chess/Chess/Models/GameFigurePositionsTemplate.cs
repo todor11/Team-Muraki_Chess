@@ -16,8 +16,8 @@
         public GameFigurePositionsTemplate()
         {
             this.pawnTemplate = new[] {
-                                                            new int[] { 0, 2, 0, 2, 0, 2, 0, 2 },
-                                                            new int[] { 2, 0, 2, 0, 2, 0, 2, 0 },
+                                                            new int[] { 0, 3, 0, 3, 0, 3, 0, 3 },
+                                                            new int[] { 3, 0, 3, 0, 3, 0, 3, 0 },
                                                             new int[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                                                             new int[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                                                             new int[] { 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -39,11 +39,11 @@
 
             this.pawnDirections = new Dictionary<GameColor, GameDirection>();
             this.pawnDirections.Add(GameColor.White, GameDirection.Up);
-            this.pawnDirections.Add(GameColor.Black, GameDirection.Down);
+            this.pawnDirections.Add(GameColor.Red, GameDirection.Down);
             this.Players = new IGamePlayer[]
                                {
                                    new Player(GameColor.White), 
-                                   new Player(GameColor.Black)
+                                   new AI(GameColor.Red)
                                };
         }
 

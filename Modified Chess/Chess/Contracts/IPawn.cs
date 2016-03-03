@@ -12,7 +12,7 @@
 
         ICell Cell { get; set; }
         
-        IEnumerable<ICell> PosibleMoves { get; }
+        IList<ICell> PosibleMoves { get; }
 
         GameDirection Direction { get; }
 

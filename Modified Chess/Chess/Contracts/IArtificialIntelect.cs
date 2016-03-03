@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    public interface IArtificialIntelect
+    public interface IArtificialIntelect: IGamePlayer
     {
-        IEngine Engine { get; }
+        IEngine Engine { get; set; }
 
         void GetMoveFromTo();
     }

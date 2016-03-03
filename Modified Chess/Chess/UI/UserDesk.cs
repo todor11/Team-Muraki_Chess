@@ -3,22 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
     using System.Windows.Forms;
 
+    using Chess.Atributes;
     using Chess.Contracts;
     using Chess.Utilities;
 
     using Chess.Enums;
+    using Chess.Models;
 
     public partial class UserDesk : Form, IFormDesk
     {
-        private const int BoardStartPointX = 50;
+        private const int BoardStartPointX = 35;
 
-        private const int BoardStartPointY = 50;
+        private const int BoardStartPointY = 35;
 
         private const int BoardSizeX = 600;
 
-        private const int BoardSizeY = 570;
+        private const int BoardSizeY = 600;
 
         private const int FirstPawnStartPointX = 0;
 
@@ -120,6 +124,33 @@
                 currPlayerPictureBoxes[i].MouseMove += this.PictureBoxMouseMove;
 
                 currPlayerPictureBoxes[i].MouseUp += this.PictureBoxMouseUp;
+            }
+
+            //AI ComputerMoveEventHandler
+            foreach (var player in this.Engine.GameBoard.GameTemplate.Players)
+            {
+                if (player.GetType().ToString() == "Chess.Models.AI")
+                {
+                    var computer = player as AI;
+                    computer.ComputersMove += (comp, args) =>
+                    {
+                        int l = this.pawnsPictureBoxsDictionary[computer.PawnColor].Count;
+                        for (int i = 0; i < l; i++)
+                        {
+                            if (this.pawnsPictureBoxsDictionary[computer.PawnColor][i].Name == string.Empty + args.Coordinates[0] + ',' + args.Coordinates[1])
+                            {
+                                var pictureBoxToMove = this.pawnsPictureBoxsDictionary[computer.PawnColor][i];
+
+                                int pictureBoxToMoveLocationX = (args.Coordinates[3] * this.pawnPositionStepX) + FirstPawnStartPointX;
+                                int pictureBoxToMoveLocationY = (args.Coordinates[2] * this.pawnPositionStepX) + FirstPawnStartPointX;
+                                pictureBoxToMove.Location = new Point(
+                                    pictureBoxToMoveLocationX,
+                                    pictureBoxToMoveLocationY);
+                                pictureBoxToMove.Name = args.Coordinates[2] + "," + args.Coordinates[3];
+                            }
+                        }
+                    };
+                }
             }
         }
 

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Atributes\ArtificialIntelectAttribute.cs" />
     <Compile Include="Contracts\IArtificialIntelect.cs" />
     <Compile Include="Contracts\ICell.cs" />
     <Compile Include="Contracts\ICellManufacturer.cs" />
