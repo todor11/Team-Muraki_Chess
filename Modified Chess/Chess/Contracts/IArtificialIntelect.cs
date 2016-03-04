@@ -1,9 +1,11 @@
 ﻿namespace Chess.Contracts
 {
-    using System.Collections.Generic;
+    using Chess.Models;
 
-    public interface IArtificialIntelect: IGamePlayer
+    public interface IArtificialIntelect : IGamePlayer
     {
+        event CompsMoveEventHandler ComputersMove;
+
         IEngine Engine { get; set; }
 
         void GetMoveFromTo();

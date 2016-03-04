@@ -8,14 +8,14 @@
 
     public class GameBoard : IGameBoard
     {
-        private readonly IGameFigurePositionsTemplate gameFigurePositionsTemplate;
+        private readonly IGameTemplate gameTemplate;
         
-        public GameBoard(IGameFigurePositionsTemplate gameFigurePositionsTemplate, ICellManufacturer cellManufacturer)
+        public GameBoard(IGameTemplate gameTemplate, ICellManufacturer cellManufacturer)
         {
-            this.gameFigurePositionsTemplate = gameFigurePositionsTemplate;
-            this.Cells = new ICell[this.gameFigurePositionsTemplate.PawnTemplate.Length][];
+            this.gameTemplate = gameTemplate;
+            this.Cells = new ICell[this.gameTemplate.PawnTemplate.Length][];
             this.CellFactory = cellManufacturer;
-            this.Pawns = new IPawn[this.gameFigurePositionsTemplate.PawnTemplate.Select(n => n.Where(el => el != 0).Count()).Sum()];
+            this.Pawns = new IPawn[this.gameTemplate.PawnTemplate.Select(n => n.Where(el => el != 0).Count()).Sum()];
             this.Init();
         }
 
@@ -25,24 +25,24 @@
 
         public ICellManufacturer CellFactory { get; private set; }
 
-        public IGameFigurePositionsTemplate GameTemplate
+        public IGameTemplate GameTemplate
         {
             get
             {
-                return this.gameFigurePositionsTemplate;
+                return this.gameTemplate;
             }
         }
 
         public void Init()
         {
             int currentPawrIndex = 0;
-            for (int i = 0; i < this.gameFigurePositionsTemplate.CellTemplate.Length; i++)
+            for (int i = 0; i < this.gameTemplate.CellTemplate.Length; i++)
             {
-                this.Cells[i] = new ICell[this.gameFigurePositionsTemplate.CellTemplate[i].Length];
-                for (int j = 0; j < this.gameFigurePositionsTemplate.CellTemplate[i].Length; j++)
+                this.Cells[i] = new ICell[this.gameTemplate.CellTemplate[i].Length];
+                for (int j = 0; j < this.gameTemplate.CellTemplate[i].Length; j++)
                 {
-                    GameColor currentCellColor = (GameColor)this.gameFigurePositionsTemplate.CellTemplate[i][j];
-                    GameColor currentPawnColor = (GameColor)this.gameFigurePositionsTemplate.PawnTemplate[i][j];
+                    GameColor currentCellColor = (GameColor)this.gameTemplate.CellTemplate[i][j];
+                    GameColor currentPawnColor = (GameColor)this.gameTemplate.PawnTemplate[i][j];
                     if (currentPawnColor == 0)
                     {
                         this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor);
@@ -50,15 +50,15 @@
                     else
                     {
                         GameDirection currentPawnDirection =
-                            this.gameFigurePositionsTemplate.PawnDirections[currentPawnColor];
+                            this.gameTemplate.PawnDirections[currentPawnColor];
                         this.Cells[i][j] = this.CellFactory.ManufactureCell(i, j, currentCellColor, currentPawnColor, currentPawnDirection);
                         this.Pawns[currentPawrIndex] = this.Cells[i][j].Pawn;
                         
-                        for (int k = 0; k < this.gameFigurePositionsTemplate.Players.Length; k++)
+                        for (int k = 0; k < this.gameTemplate.Players.Length; k++)
                         {
-                            if (this.gameFigurePositionsTemplate.Players[k].PawnColor == currentPawnColor)
+                            if (this.gameTemplate.Players[k].PawnColor == currentPawnColor)
                             {
-                                this.gameFigurePositionsTemplate.Players[k].Pawns.Add(this.Cells[i][j].Pawn);
+                                this.gameTemplate.Players[k].Pawns.Add(this.Cells[i][j].Pawn);
                                 break;
                             }
                         }

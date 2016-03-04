@@ -10,7 +10,7 @@
 
         ICellManufacturer CellFactory { get; }
 
-        IGameFigurePositionsTemplate GameTemplate { get; }
+        IGameTemplate GameTemplate { get; }
 
         void Init();
 

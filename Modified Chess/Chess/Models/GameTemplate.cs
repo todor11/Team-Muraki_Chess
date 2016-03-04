@@ -5,7 +5,7 @@
     using Chess.Contracts;
     using Chess.Enums;
 
-    public class GameFigurePositionsTemplate : IGameFigurePositionsTemplate
+    public class GameTemplate : IGameTemplate
     {
         private readonly int[][] pawnTemplate;
 
@@ -13,7 +13,7 @@
 
         private readonly Dictionary<GameColor, GameDirection> pawnDirections;
 
-        public GameFigurePositionsTemplate()
+        public GameTemplate()
         {
             this.pawnTemplate = new[] {
                                                             new int[] { 0, 2, 0, 2, 0, 2, 0, 2 },

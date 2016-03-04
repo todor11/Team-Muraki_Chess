@@ -1,6 +1,5 @@
 ﻿namespace Chess.UI
 {
-    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -9,10 +8,7 @@
 
     using Chess.Atributes;
     using Chess.Contracts;
-    using Chess.Utilities;
-
     using Chess.Enums;
-    using Chess.Models;
 
     public partial class UserDesk : Form, IFormDesk
     {
@@ -53,7 +49,6 @@
             this.activePawnPosibleCells = new HashSet<string>();
 
             this.InitializeComponent();
-            
             this.Init();
         }
 
@@ -79,7 +74,7 @@
                         {
                             newPawn.Image = global::Chess.Properties.Resources.black_pawn;
                         }
-                        else if(pawnColor == GameColor.White)
+                        else if (pawnColor == GameColor.White)
                         {
                             newPawn.Image = global::Chess.Properties.Resources.white_pawn;
                         }
@@ -126,16 +121,22 @@
                 currPlayerPictureBoxes[i].MouseUp += this.PictureBoxMouseUp;
             }
 
-            //AI ComputerMoveEventHandler
+            //Artificial Intelect Move Event Handler
+            var itemTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(type => type.CustomAttributes
+                    .Any(a => a.AttributeType == typeof(ArtificialIntelectAttribute)))
+                    .ToArray();
+
             foreach (var player in this.Engine.GameBoard.GameTemplate.Players)
             {
-                if (player.GetType().ToString() == "Chess.Models.AI")
+                if (itemTypes.Contains(player.GetType()))
                 {
-                    var computer = player as AI;
+                    var computer = player as IArtificialIntelect;
                     computer.ComputersMove += (comp, args) =>
                     {
-                        int l = this.pawnsPictureBoxsDictionary[computer.PawnColor].Count;
-                        for (int i = 0; i < l; i++)
+                        int numberOfCompsPictureBoxes = this.pawnsPictureBoxsDictionary[computer.PawnColor].Count;
+                        for (int i = 0; i < numberOfCompsPictureBoxes; i++)
                         {
                             if (this.pawnsPictureBoxsDictionary[computer.PawnColor][i].Name == string.Empty + args.Coordinates[0] + ',' + args.Coordinates[1])
                             {
@@ -210,6 +211,21 @@
             }
         }
 
+        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.temp = MousePosition;
+                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
+                PictureBox currentPictureBox = sender as PictureBox;
+                currentPictureBox.Location = new Point(
+                    currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X,
+                    currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y);
+
+                this.firstPoint = this.temp;
+            }
+        }
+
         private void PictureBoxMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -223,8 +239,7 @@
                 int newRow = ((currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y +
                     (this.pawnPositionStepY / 2)) - FirstPawnStartPointY) / this.pawnPositionStepY;
                 int newCurrentPictureBoxLocationY = (newRow * this.pawnPositionStepY) + FirstPawnStartPointY;
-
-                //
+                
                 string newStringPosition = newRow + "," + newCol;
                 if (this.activePawnPosibleCells.Contains(newStringPosition))
                 {
@@ -246,21 +261,6 @@
                 {
                     currentPictureBox.Location = this.pawnStartPoint;
                 }
-            }
-        }
-
-        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                this.temp = MousePosition;
-                this.distanceBetweenPreviousAndTemporary = new Point(this.firstPoint.X - this.temp.X, this.firstPoint.Y - this.temp.Y);
-                PictureBox currentPictureBox = sender as PictureBox;
-                currentPictureBox.Location = new Point(
-                    currentPictureBox.Location.X - this.distanceBetweenPreviousAndTemporary.X,
-                    currentPictureBox.Location.Y - this.distanceBetweenPreviousAndTemporary.Y);
-
-                this.firstPoint = this.temp;
             }
         }
     }

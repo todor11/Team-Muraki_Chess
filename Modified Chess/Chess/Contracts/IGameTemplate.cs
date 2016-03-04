@@ -4,7 +4,7 @@
 
     using Chess.Enums;
 
-    public interface IGameFigurePositionsTemplate
+    public interface IGameTemplate
     {
         int[][] PawnTemplate { get; }
 

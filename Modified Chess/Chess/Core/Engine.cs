@@ -19,7 +19,8 @@
             this.gameTurnsCounter = 0;
             this.Players = gameBoard.GameTemplate.Players;
             this.PreviousMoves = new Stack<IEnumerable<ICell>>();
-            this.SetThisEngineToAIIfExist();
+            this.IsGameFinished = false;
+            this.SetThisEngineToAiIfExist();
         }
 
         public IGameBoard GameBoard { get; }
@@ -40,7 +41,7 @@
             }
         }
 
-        public bool IsGameFinished { get; }
+        public bool IsGameFinished { get; private set; }
 
         public void Run()
         {
@@ -79,6 +80,7 @@
             {
                 if (!this.GameBoard.Cells[0][i].IsFree && this.GameBoard.Cells[0][i].Pawn.Direction == GameDirection.Up)
                 {
+                    this.IsGameFinished = true;
                     return true;
                 }
             }
@@ -90,6 +92,7 @@
             {
                 if (!this.GameBoard.Cells[maxRowIndex][i].IsFree && this.GameBoard.Cells[maxRowIndex][i].Pawn.Direction == GameDirection.Down)
                 {
+                    this.IsGameFinished = true;
                     return true;
                 }
             }
@@ -99,6 +102,7 @@
             {
                 if (!this.GameBoard.Cells[i][0].IsFree && this.GameBoard.Cells[i][0].Pawn.Direction == GameDirection.Left)
                 {
+                    this.IsGameFinished = true;
                     return true;
                 }
             }
@@ -109,6 +113,7 @@
                 if (!this.GameBoard.Cells[i][this.GameBoard.Cells[i].Length - 1].IsFree && 
                     this.GameBoard.Cells[i][this.GameBoard.Cells[i].Length - 1].Pawn.Direction == GameDirection.Right)
                 {
+                    this.IsGameFinished = true;
                     return true;
                 }
             }
@@ -122,7 +127,7 @@
             this.ActivePlayer = this.Players[currentPlayerIndex];
         }
 
-        private void SetThisEngineToAIIfExist()
+        private void SetThisEngineToAiIfExist()
         {
             var itemTypes = Assembly.GetExecutingAssembly()
                 .GetTypes()

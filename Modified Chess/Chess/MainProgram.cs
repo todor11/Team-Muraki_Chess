@@ -15,10 +15,10 @@
         [STAThread]
         public static void Main()
         {
-            var gameFigurePositionsTemplate = new GameFigurePositionsTemplate();
+            var gameTemplate = new GameTemplate();
             var pawnManufacturer = new PawnManufacturer();
             var cellManufacturer = new CellManufacturer(pawnManufacturer);
-            var gameBoard = new GameBoard(gameFigurePositionsTemplate, cellManufacturer);
+            var gameBoard = new GameBoard(gameTemplate, cellManufacturer);
             var engine = new Engine(gameBoard);
             engine.Run();
             Application.EnableVisualStyles();
