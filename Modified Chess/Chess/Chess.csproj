@@ -67,7 +67,7 @@
     <Compile Include="MainProgram.cs" />
     <Compile Include="Models\AI.cs" />
     <Compile Include="Models\CellManufacturer.cs" />
-    <Compile Include="Models\CompsMoveEventArgs.cs" />
+    <Compile Include="Utilities\CompsMoveEventArgs.cs" />
     <Compile Include="Models\MatrixCell.cs" />
     <Compile Include="Models\PawnManufacturer.cs" />
     <Compile Include="Models\Cell.cs" />
