@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using Chess.Atributes;
     using Chess.Contracts;
@@ -15,7 +16,7 @@
     {
         public event CompsMoveEventHandler ComputersMove;
 
-        private readonly Dictionary<IPawn, int[][]> allPawnsPosibleMoves;
+        private readonly Dictionary<IPawn, IMatrixCell> winningPawns;
 
         private readonly Dictionary<GameDirection, int[][]> posibleCell;
 
@@ -24,8 +25,8 @@
         public AI(GameColor pawnColor)
            : base(pawnColor)
         {
-            this.allPawnsPosibleMoves = new Dictionary<IPawn, int[][]>();
             this.posibleCell = new Dictionary<GameDirection, int[][]>();
+            this.winningPawns = new Dictionary<IPawn, IMatrixCell>();
             this.random = new Random();
             this.CreatePosibleCellDictionary();
         }
@@ -36,34 +37,70 @@
         {
             foreach (var pawn in this.Pawns)
             {
-                var matrix = this.GetCellMatrix();
                 int row = pawn.Cell.Row;
                 int col = pawn.Cell.Col;
-                this.GetSinglePawnMovesToEnd(matrix, row, col, pawn.Direction, pawn.IsMoved);
-                if (!this.allPawnsPosibleMoves.ContainsKey(pawn))
+                var winningPawnProperties = this.GetSinglePawnMovesToEnd(row, col, pawn.Direction, pawn.IsMoved);
+                if (winningPawnProperties.Row != -1)
                 {
-                    this.allPawnsPosibleMoves[pawn] = new int[matrix.Length][];
+                    this.winningPawns[pawn] = winningPawnProperties;
+                }
+            }
+
+            if (this.winningPawns.Count > 0)
+            {
+                int minStep = Int32.MaxValue;
+                IPawn winner = this.Pawns[0];
+                foreach (var pawn in this.winningPawns.Keys)
+                {
+                    if (this.winningPawns[pawn].Step < minStep)
+                    {
+                        minStep = this.winningPawns[pawn].Step;
+                        winner = pawn;
+                    }
                 }
 
-                this.allPawnsPosibleMoves[pawn] = matrix;
+                ICell winningCellFrom = winner.Cell;
+                int cellToRow = this.winningPawns[winner]
+                    .RoadToFinal.ToString()
+                    .Split(';')
+                    .ToArray()[1]
+                    .Split(',')
+                    .Select(int.Parse)
+                    .ToArray()[0];
+                int cellToCol = this.winningPawns[winner]
+                    .RoadToFinal.ToString()
+                    .Split(';')
+                    .ToArray()[1]
+                    .Split(',')
+                    .Select(int.Parse)
+                    .ToArray()[1];
+                ICell winningCellTo = this.Engine.GameBoard.Cells[cellToRow][cellToCol];
+                this.winningPawns.Clear();
+
+                if (this.ComputersMove != null)
+                {
+                    this.ComputersMove(this,
+                        new CompsMoveEventArgs(new int[] { winningCellFrom.Row, winningCellFrom.Col, cellToRow, cellToCol }));
+                }
+
+                this.Engine.MovePawnFromTo(winningCellFrom, winningCellTo);
             }
-
-            var pawnsThatCanFinish = this.GetPawnsThatCanFinish();
-            //TODO 
-            //TODO 
-            //TODO this is only temporary
-            int pawnIndexFrom = this.random.Next(0, this.Pawns.Count);
-            var cellFrom = this.Pawns[pawnIndexFrom].Cell;
-            int cellIndexTo = this.random.Next(0, this.Pawns[pawnIndexFrom].PosibleMoves.Count);
-            var cellTo = this.Pawns[pawnIndexFrom].PosibleMoves[cellIndexTo];
-
-            var te = new int[] { cellFrom.Row, cellFrom.Col, cellTo.Row, cellTo.Col };
-            if (this.ComputersMove != null)
+            else
             {
-                this.ComputersMove(this,
-                    new CompsMoveEventArgs(new int[] { cellFrom.Row, cellFrom.Col, cellTo.Row, cellTo.Col }));
+                var pawnsWhoHasPosibleMoves = this.Pawns.Where(p => p.PosibleMoves.Count > 0).ToArray();
+                int pawnIndexFrom = this.random.Next(0, pawnsWhoHasPosibleMoves.Length);
+                ICell cellFrom = pawnsWhoHasPosibleMoves[pawnIndexFrom].Cell;
+                int cellIndexTo = this.random.Next(0, pawnsWhoHasPosibleMoves[pawnIndexFrom].PosibleMoves.Count);
+                ICell cellTo = pawnsWhoHasPosibleMoves[pawnIndexFrom].PosibleMoves[cellIndexTo];
+
+                if (this.ComputersMove != null)
+                {
+                    this.ComputersMove(this,
+                        new CompsMoveEventArgs(new int[] { cellFrom.Row, cellFrom.Col, cellTo.Row, cellTo.Col }));
+                }
+
+                this.Engine.MovePawnFromTo(cellFrom, cellTo);
             }
-            this.Engine.MovePawnFromTo(cellFrom, cellTo);
         }
 
         public override void MakeNextMove()
@@ -91,36 +128,34 @@
             return matrix;
         }
 
-        private void GetSinglePawnMovesToEnd(int[][] matrix, int row, int col, GameDirection direction, bool isMoved)
+        private IMatrixCell GetSinglePawnMovesToEnd(int row, int col, GameDirection direction, bool isMoved)
         {
+            var matrix = this.GetCellMatrix();
             var queue = new Queue<MatrixCell>();
-            queue.Enqueue(new MatrixCell(row, col, 0));
+            bool tempIsMoved = isMoved;
+            queue.Enqueue(new MatrixCell(row, col, 0, string.Empty));
             int[] rows = this.posibleCell[direction][0];
             int[] cols = this.posibleCell[direction][1];
             while (queue.Count > 0)
             {
                 var currentCell = queue.Dequeue();
-                if (!isMoved && (currentCell.Row + rows[0] >= 0) && (currentCell.Row + rows[0] < matrix.Length) &&
-                    (matrix[currentCell.Row + rows[0]][currentCell.Col + cols[0]] == 0) && 
-                    (matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] != -1))
-                {
-                    queue.Enqueue(new MatrixCell(currentCell.Row + rows[0], currentCell.Col + cols[0], currentCell.Step + 1));
-                    matrix[currentCell.Row + rows[0]][currentCell.Col + cols[0]] = currentCell.Step + 1;
-                }
-
-                if ((currentCell.Row + rows[1] >= 0) && (currentCell.Row + rows[1] < matrix.Length) &&
-                    (matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] == 0))
-                {
-                    queue.Enqueue(new MatrixCell(currentCell.Row + rows[1], currentCell.Col + cols[1], currentCell.Step + 1));
-                    matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] = currentCell.Step + 1;
-                }
 
                 if ((currentCell.Row + rows[2] >= 0) && (currentCell.Row + rows[2] < matrix.Length) &&
                     (currentCell.Col + cols[2] >= 0) && (currentCell.Col + cols[2] < matrix[currentCell.Row + rows[2]].Length) &&
                     (matrix[currentCell.Row + rows[2]][currentCell.Col + cols[2]] == 0) &&
                     (matrix[currentCell.Row + rows[3]][currentCell.Col + cols[3]] == -1))
                 {
-                    queue.Enqueue(new MatrixCell(currentCell.Row + rows[2], currentCell.Col + cols[2], currentCell.Step + 1));
+                    var newMatrixCell = new MatrixCell(
+                        currentCell.Row + rows[2],
+                        currentCell.Col + cols[2],
+                        currentCell.Step + 1,
+                        currentCell.RoadToFinal);
+                    if (this.ValidateIsOnFinal(currentCell.Row + rows[2], currentCell.Col + cols[2], direction))
+                    {
+                        return newMatrixCell;
+                    }
+
+                    queue.Enqueue(newMatrixCell);
                     matrix[currentCell.Row + rows[2]][currentCell.Col + cols[2]] = currentCell.Step + 1;
                 }
 
@@ -129,10 +164,91 @@
                     (matrix[currentCell.Row + rows[4]][currentCell.Col + cols[4]] == 0) &&
                     (matrix[currentCell.Row + rows[5]][currentCell.Col + cols[5]] == -1))
                 {
-                    queue.Enqueue(new MatrixCell(currentCell.Row + rows[4], currentCell.Col + cols[4], currentCell.Step + 1));
+                    var newMatrixCell = new MatrixCell(
+                        currentCell.Row + rows[4],
+                        currentCell.Col + cols[4],
+                        currentCell.Step + 1,
+                        currentCell.RoadToFinal);
+                    if (this.ValidateIsOnFinal(currentCell.Row + rows[4], currentCell.Col + cols[4], direction))
+                    {
+                        return newMatrixCell;
+                    }
+
+                    queue.Enqueue(newMatrixCell);
                     matrix[currentCell.Row + rows[4]][currentCell.Col + cols[4]] = currentCell.Step + 1;
                 }
+
+                if (!tempIsMoved && (currentCell.Row + rows[0] >= 0) && (currentCell.Row + rows[0] < matrix.Length) &&
+                    (matrix[currentCell.Row + rows[0]][currentCell.Col + cols[0]] == 0) && 
+                    (matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] != -1))
+                {
+                    var newMatrixCell = new MatrixCell(
+                        currentCell.Row + rows[0],
+                        currentCell.Col + cols[0],
+                        currentCell.Step + 1,
+                        currentCell.RoadToFinal);
+                    if (this.ValidateIsOnFinal(currentCell.Row + rows[0], currentCell.Col + cols[0], direction))
+                    {
+                        return newMatrixCell;
+                    }
+
+                    tempIsMoved = true;
+                    queue.Enqueue(newMatrixCell);
+                    matrix[currentCell.Row + rows[0]][currentCell.Col + cols[0]] = currentCell.Step + 1;
+                }
+
+                if ((currentCell.Row + rows[1] >= 0) && (currentCell.Row + rows[1] < matrix.Length) &&
+                    (matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] == 0))
+                {
+                    var newMatrixCell = new MatrixCell(
+                        currentCell.Row + rows[1],
+                        currentCell.Col + cols[1],
+                        currentCell.Step + 1,
+                        currentCell.RoadToFinal);
+                    if (this.ValidateIsOnFinal(currentCell.Row + rows[1], currentCell.Col + cols[1], direction))
+                    {
+                        return newMatrixCell;
+                    }
+
+                    queue.Enqueue(newMatrixCell);
+                    matrix[currentCell.Row + rows[1]][currentCell.Col + cols[1]] = currentCell.Step + 1;
+                }
             }
+
+            return new MatrixCell(-1, -1, 0, String.Empty);
+        }
+
+        private bool ValidateIsOnFinal(int row, int col, GameDirection direction)
+        {
+            switch (direction)
+            {
+                case GameDirection.Up:
+                    if (row == 0)
+                    {
+                        return true;
+                    }
+                    break;
+                case GameDirection.Down:
+                    if (row == this.Engine.GameBoard.Cells.Length - 1)
+                    {
+                        return true;
+                    }
+                    break;
+                case GameDirection.Left:
+                    if (col == 0)
+                    {
+                        return true;
+                    }
+                    break;
+                case GameDirection.Right:
+                    if (col == this.Engine.GameBoard.Cells[row].Length - 1)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+
+            return false;
         }
 
         private void CreatePosibleCellDictionary()
@@ -142,45 +258,7 @@
                                                            new int[] { 2, 1, 2, 1, 2, 1},
                                                            new int[] { 0, 0, -2, -1, 2, 1}
                                                        };
-
-        }
-
-        private List<IPawn> GetPawnsThatCanFinish()
-        {
-            var winnerPawns = new List<IPawn>();
-            var direction = this.Pawns[0].Direction;
-            
-            foreach (var pawnMoveMatrix in this.allPawnsPosibleMoves.Values)
-            {
-                switch (direction)
-                {
-                    case GameDirection.Up:
-                        
-
-                        break;
-                }
-            }
-
-            return winnerPawns;
+            //TODO
         }
     }
-
-    public class MatrixCell
-    {
-        public MatrixCell(int row, int col, int step)
-        {
-            this.Row = row;
-            this.Col = col;
-            this.Step = step;
-        }
-
-        public int Row { get; set; }
-
-        public int Col { get; set; }
-
-        public int Step { get; set; }
-
-    }
-
-    
 }

@@ -55,6 +55,7 @@
     <Compile Include="Contracts\IGameBoard.cs" />
     <Compile Include="Contracts\IGamePlayer.cs" />
     <Compile Include="Contracts\IGameResult.cs" />
+    <Compile Include="Contracts\IMatrixCell.cs" />
     <Compile Include="Contracts\IMovesCounter.cs" />
     <Compile Include="Contracts\IPawn.cs" />
     <Compile Include="Contracts\IGameFigurePositionsTemplate.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="MainProgram.cs" />
     <Compile Include="Models\AI.cs" />
     <Compile Include="Models\CellManufacturer.cs" />
+    <Compile Include="Models\CompsMoveEventArgs.cs" />
+    <Compile Include="Models\MatrixCell.cs" />
     <Compile Include="Models\PawnManufacturer.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\GameBoard.cs" />
