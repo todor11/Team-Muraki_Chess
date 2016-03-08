@@ -53,20 +53,30 @@
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IFormDesk.cs" />
     <Compile Include="Contracts\IGameBoard.cs" />
+    <Compile Include="Contracts\IGameCreator.cs" />
     <Compile Include="Contracts\IGameManager.cs" />
     <Compile Include="Contracts\IGamePlayer.cs" />
     <Compile Include="Contracts\IGameResult.cs" />
+    <Compile Include="Contracts\IGameTemplateCreator.cs" />
     <Compile Include="Contracts\IMatrixCell.cs" />
     <Compile Include="Contracts\IPawn.cs" />
     <Compile Include="Contracts\IGameTemplate.cs" />
     <Compile Include="Contracts\IStatistic.cs" />
     <Compile Include="Contracts\ITemplateManufacturer.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\FormGameCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\FormGameCreator.Designer.cs">
+      <DependentUpon>FormGameCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums\GameDirection.cs" />
     <Compile Include="Enums\GameColor.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Models\AI.cs" />
     <Compile Include="Models\CellManufacturer.cs" />
+    <Compile Include="Models\UserGameTemplate.cs" />
+    <Compile Include="Models\UserTemplateCreator.cs" />
     <Compile Include="Utilities\CompsMoveEventArgs.cs" />
     <Compile Include="Models\MatrixCell.cs" />
     <Compile Include="Models\PawnManufacturer.cs" />
@@ -84,6 +94,9 @@
       <DependentUpon>UserDesk.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\GameConstants.cs" />
+    <EmbeddedResource Include="Core\FormGameCreator.resx">
+      <DependentUpon>FormGameCreator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

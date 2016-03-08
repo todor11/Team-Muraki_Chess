@@ -13,9 +13,9 @@
             this.Pawns = new List<IPawn>();
         }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public GameColor PawnColor { get; }
+        public GameColor PawnColor { get; set; }
 
         public IList<IPawn> Pawns { get; }
 

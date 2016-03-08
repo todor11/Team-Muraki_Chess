@@ -6,9 +6,9 @@
 
     public interface IGamePlayer
     {
-        string Name { get; }
+        string Name { get; set; }
 
-        GameColor PawnColor { get; }
+        GameColor PawnColor { get; set; }
 
         IList<IPawn> Pawns { get; }
 

@@ -15,16 +15,21 @@
         [STAThread]
         public static void Main()
         {
-            var gameTemplate = new GameTemplate();
-            var pawnManufacturer = new PawnManufacturer();
-            var cellManufacturer = new CellManufacturer(pawnManufacturer);
-            var gameBoard = new GameBoard(gameTemplate, cellManufacturer);
-            var engine = new Engine(gameBoard);
-            engine.Run();
+            /*
+           var gameTemplate = new GameTemplate();
+           var pawnManufacturer = new PawnManufacturer();
+           var cellManufacturer = new CellManufacturer(pawnManufacturer);
+           var gameBoard = new GameBoard(gameTemplate, cellManufacturer);
+           var engine = new Engine(gameBoard);
+           engine.Run();
+           */
+            var userTemplateCreator = new UserTemplateCreator();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UserDesk(engine));
-            
+            //Application.Run(new UserDesk(engine));
+
+            Application.Run(new FormGameCreator(userTemplateCreator));
+
         }
     }
 }
