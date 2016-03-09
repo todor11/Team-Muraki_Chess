@@ -54,6 +54,7 @@
             this.NumOfPlComboBox = new System.Windows.Forms.ComboBox();
             this.MainLabel = new System.Windows.Forms.Label();
             this.NumOfPlLabel = new System.Windows.Forms.Label();
+            this.ExitButton = new System.Windows.Forms.Button();
             this.groupBoxP4.SuspendLayout();
             this.groupBoxP3.SuspendLayout();
             this.groupBoxP2.SuspendLayout();
@@ -292,13 +293,15 @@
             // 
             // StartButton
             // 
+            this.StartButton.BackColor = System.Drawing.Color.Lime;
             this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.Location = new System.Drawing.Point(242, 289);
+            this.StartButton.Location = new System.Drawing.Point(141, 296);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(200, 26);
             this.StartButton.TabIndex = 47;
-            this.StartButton.Text = "Start game";
-            this.StartButton.UseVisualStyleBackColor = true;
+            this.StartButton.Text = "Restart game";
+            this.StartButton.UseVisualStyleBackColor = false;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
             // ColorLabel
             // 
@@ -365,11 +368,24 @@
             this.NumOfPlLabel.TabIndex = 41;
             this.NumOfPlLabel.Text = "Choose number of players :";
             // 
+            // ExitButton
+            // 
+            this.ExitButton.BackColor = System.Drawing.Color.Red;
+            this.ExitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExitButton.Location = new System.Drawing.Point(445, 296);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(200, 26);
+            this.ExitButton.TabIndex = 55;
+            this.ExitButton.Text = "Exit Game";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
             // FormGameCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 344);
+            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.buttonOK3);
             this.Controls.Add(this.buttonOK2);
             this.Controls.Add(this.buttonOK1);
@@ -427,5 +443,6 @@
         private System.Windows.Forms.ComboBox NumOfPlComboBox;
         private System.Windows.Forms.Label MainLabel;
         private System.Windows.Forms.Label NumOfPlLabel;
+        private System.Windows.Forms.Button ExitButton;
     }
 }

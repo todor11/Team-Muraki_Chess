@@ -2,8 +2,14 @@
 {
     using System.Collections.Generic;
 
+    using Chess.Utilities;
+
+    public delegate void EndGameEventHandler(IEngine sender, EndGameEventArguments args);
+
     public interface IEngine
     {
+        event EndGameEventHandler GameOverHandler;
+
         IGameBoard GameBoard { get; }
 
         IFormDesk UserForm { get; set; }

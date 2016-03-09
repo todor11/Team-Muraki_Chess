@@ -10,6 +10,7 @@
     using Chess.Enums;
     using Chess.Models;
     using Chess.UI;
+    using Chess.Utilities;
 
     public partial class FormGameCreator : Form, IGameCreator
     {
@@ -21,14 +22,14 @@
 
         private List<string> freeColorsAsString;
 
-        //private bool[] isBoxFill;///////////////
+        private Form userForm;
 
         public FormGameCreator(IGameTemplateCreator templateCreator)
         {
             this.TemplateCreator = templateCreator;
             this.RaceTypeDictionary = new Dictionary<string, Type>();
             this.GetPlayerTypes();
-            InitializeComponent();
+            this.InitializeComponent();
             this.HideElementsWhenStart();
             this.SetStartGameColors();
         }
@@ -55,7 +56,21 @@
             engine.Run();
             this.Visible = false;
             var userDesk = new UserDesk(engine);
+            this.userForm = userDesk;
             userDesk.Visible = true;
+            engine.GameOverHandler += this.GameOver;
+        }
+
+        private void GameOver(object sender, EndGameEventArguments arguments)
+        {
+            if (arguments.IsGameEnded)
+            {
+                MessageBox.Show(string.Format("Winner is {0}", arguments.WinnerName));
+                this.userForm.Close();
+                this.Visible = true;
+                this.ExitButton.Visible = true;
+                this.StartButton.Visible = true;
+            }
         }
 
         public void EndGame()
@@ -94,6 +109,7 @@
             this.groupBoxP3.Visible = false;
             this.groupBoxP4.Visible = false;
             this.StartButton.Visible = false;
+            this.ExitButton.Visible = false;
 
             this.RaceLabel.Visible = false;
             this.RaceComboBox1.Visible = false;
@@ -317,6 +333,14 @@
             this.StartGame();
         }
 
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            this.StartGame();
+        }
     }
 }

@@ -8,9 +8,14 @@
     using Chess.Contracts;
     using Chess.Enums;
     using Chess.Atributes;
+    using Chess.Utilities;
 
     public class Engine : IEngine
     {
+        public event EndGameEventHandler GameOverHandler;
+
+        private bool isGameFinished;
+
         private int gameTurnsCounter;
 
         public Engine(IGameBoard gameBoard)
@@ -19,7 +24,7 @@
             this.gameTurnsCounter = 0;
             this.Players = gameBoard.GameTemplate.Players;
             this.PreviousMoves = new Stack<IEnumerable<ICell>>();
-            this.IsGameFinished = false;
+            this.isGameFinished = false;
             this.SetThisEngineToAiIfExist();
         }
 
@@ -41,14 +46,32 @@
             }
         }
 
-        public bool IsGameFinished { get; private set; }
+        public bool IsGameFinished
+        {
+            get
+            {
+                return this.isGameFinished;
+            }
+
+            private set
+            {
+                if (value)
+                {
+                    if (this.GameOverHandler != null)
+                    {
+                        this.GameOverHandler(this, new EndGameEventArguments(this.isGameFinished, this.ActivePlayer.Name));
+                    }
+                    this.isGameFinished = value;
+                }
+            }
+        }
 
         public void Run()
         {
             
             if (this.CheckIsGameFinished())
             {
-                //TODO
+                this.IsGameFinished = true;
             }
             else
             {

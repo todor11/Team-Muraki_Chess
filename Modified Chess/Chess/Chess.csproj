@@ -93,6 +93,7 @@
     <Compile Include="UI\UserDesk.Designer.cs">
       <DependentUpon>UserDesk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\EndGameEventArguments.cs" />
     <Compile Include="Utilities\GameConstants.cs" />
     <EmbeddedResource Include="Core\FormGameCreator.resx">
       <DependentUpon>FormGameCreator.cs</DependentUpon>

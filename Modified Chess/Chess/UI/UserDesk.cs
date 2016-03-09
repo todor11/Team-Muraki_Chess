@@ -1,5 +1,6 @@
 ﻿namespace Chess.UI
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -9,6 +10,7 @@
     using Chess.Atributes;
     using Chess.Contracts;
     using Chess.Enums;
+    using Chess.Utilities;
 
     public partial class UserDesk : Form, IFormDesk
     {
@@ -104,7 +106,27 @@
                     }
                 }
             }
-            
+
+            this.PlayerNamelabel1.Text = this.Engine.Players[0].Name;
+            this.PlayerNamelabel2.Text = this.Engine.Players[1].Name;
+            if (this.Engine.Players.Length > 2)
+            {
+                this.PlayerNamelabel3.Text = this.Engine.Players[2].Name;
+            }
+            else
+            {
+                this.PlayerNamelabel3.Text = "";
+            }
+
+            if (this.Engine.Players.Length > 3)
+            {
+                this.PlayerNamelabel4.Text = this.Engine.Players[3].Name;
+            }
+            else
+            {
+                this.PlayerNamelabel4.Text = "";
+            }
+
             this.SetEventHolders();
         }
 
