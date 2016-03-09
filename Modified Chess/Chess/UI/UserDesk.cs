@@ -12,7 +12,7 @@
 
     public partial class UserDesk : Form, IFormDesk
     {
-        private const int BoardStartPointX = 35;
+        private const int BoardStartPointX = 150;
 
         private const int BoardStartPointY = 35;
 

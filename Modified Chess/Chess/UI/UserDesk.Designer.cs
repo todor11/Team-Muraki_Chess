@@ -41,9 +41,9 @@
             // 
             this.boardImage.BackgroundImage = global::Chess.Properties.Resources.chessboard;
             this.boardImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.boardImage.Location = new System.Drawing.Point(50, 50);
+            this.boardImage.Location = new System.Drawing.Point(150, 35);
             this.boardImage.Name = "boardImage";
-            this.boardImage.Size = new System.Drawing.Size(596, 569);
+            this.boardImage.Size = new System.Drawing.Size(600, 600);
             this.boardImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.boardImage.TabIndex = 0;
             this.boardImage.TabStop = false;
