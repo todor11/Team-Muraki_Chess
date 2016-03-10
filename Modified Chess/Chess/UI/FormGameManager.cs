@@ -1,22 +1,27 @@
-﻿namespace Chess.Core
+﻿namespace Chess.UI
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
 
     using Chess.Contracts;
+    using Chess.Core;
     using Chess.Enums;
     using Chess.Models;
-    using Chess.UI;
     using Chess.Utilities;
 
-    public partial class FormGameCreator : Form, IGameCreator
+    public partial class FormGameManager : Form, IGameManager
     {
         private const int NumberOfGameColors = 4;
 
         private readonly Dictionary<string, Type> RaceTypeDictionary;
+
+        private IEngine engine;
+
+        private string rules;
 
         private List<GameColor> freeColors;
 
@@ -24,19 +29,23 @@
 
         private Form userForm;
 
-        public FormGameCreator(IGameTemplateCreator templateCreator)
+        public FormGameManager(IGameTemplateCreator templateCreator, IStatistic statistic)
         {
+            this.Statistic = statistic;
             this.TemplateCreator = templateCreator;
             this.RaceTypeDictionary = new Dictionary<string, Type>();
             this.GetPlayerTypes();
             this.InitializeComponent();
             this.HideElementsWhenStart();
             this.SetStartGameColors();
+            this.GetRules();
         }
 
         public int NumberOfPlayers { get; private set; }
 
         public int NumberOfPawns { get; private set; }
+
+        public IStatistic Statistic { get; }
 
         public IGamePlayer[] Players { get; private set; }
 
@@ -52,30 +61,20 @@
             var pawnManufacturer = new PawnManufacturer();
             var cellManufacturer = new CellManufacturer(pawnManufacturer);
             var gameBoard = new GameBoard(gameTemplate, cellManufacturer);
-            var engine = new Engine(gameBoard);
-            engine.Run();
+            this.engine = new Engine(gameBoard);
+            this.engine.Run();
             this.Visible = false;
-            var userDesk = new UserDesk(engine);
+            var userDesk = new UserDesk(this.engine);
             this.userForm = userDesk;
             userDesk.Visible = true;
-            engine.GameOverHandler += this.GameOver;
-        }
-
-        private void GameOver(object sender, EndGameEventArguments arguments)
-        {
-            if (arguments.IsGameEnded)
-            {
-                MessageBox.Show(string.Format("Winner is {0}", arguments.WinnerName));
-                this.userForm.Close();
-                this.Visible = true;
-                this.ExitButton.Visible = true;
-                this.StartButton.Visible = true;
-            }
+            this.engine.GameOverHandler += this.GameOver;
         }
 
         public void EndGame()
         {
-            throw new System.NotImplementedException();
+
+            this.Statistic.SaveStatistic();
+            this.Close();
         }
 
         private void SetStartGameColors()
@@ -110,6 +109,7 @@
             this.groupBoxP4.Visible = false;
             this.StartButton.Visible = false;
             this.ExitButton.Visible = false;
+            this.ViewScoresButton.Visible = false;
 
             this.RaceLabel.Visible = false;
             this.RaceComboBox1.Visible = false;
@@ -161,6 +161,20 @@
             this.PlayersNames = new string[this.NumberOfPlayers];
         }
 
+        private void GameOver(object sender, EndGameEventArguments arguments)
+        {
+            if (arguments.IsGameEnded)
+            {
+                MessageBox.Show(string.Format("Winner is {0}", arguments.WinnerName));
+                this.userForm.Close();
+                this.Visible = true;
+                this.ExitButton.Visible = true;
+                this.StartButton.Visible = true;
+                this.ViewScoresButton.Visible = true;
+                this.Statistic.SaveResult(this.engine.ActivePlayer.Name, this.engine.GameTurnsCounter);
+            }
+        }
+
         private void buttonOK1_Click(object sender, System.EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.RaceComboBox1.Text) ||
@@ -203,6 +217,15 @@
             this.NamePlayer3.Visible = true;
             this.NamePlayer4.Visible = true;
             this.buttonOK2.Visible = true;
+        }
+
+        private void GetRules()
+        {
+            using (var reader = new StreamReader(GameConstants.RulesTextPath))
+            {
+                string line = reader.ReadLine();
+                this.rules = line;
+            }
         }
 
         private void CreatePlayer(string playerTypeAsString, int index, GameColor pawnColor)
@@ -335,12 +358,25 @@
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.EndGame();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
             this.StartGame();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var rulesForn = new Rules(this.rules);
+            rulesForn.Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var statistic = this.Statistic.GetStatistic();
+            var scores = new Scores(statistic);
+            scores.Visible = true;
         }
     }
 }

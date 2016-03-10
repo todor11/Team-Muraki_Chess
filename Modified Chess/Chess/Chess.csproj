@@ -53,7 +53,6 @@
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IFormDesk.cs" />
     <Compile Include="Contracts\IGameBoard.cs" />
-    <Compile Include="Contracts\IGameCreator.cs" />
     <Compile Include="Contracts\IGameManager.cs" />
     <Compile Include="Contracts\IGamePlayer.cs" />
     <Compile Include="Contracts\IGameResult.cs" />
@@ -64,11 +63,13 @@
     <Compile Include="Contracts\IStatistic.cs" />
     <Compile Include="Contracts\ITemplateManufacturer.cs" />
     <Compile Include="Core\Engine.cs" />
-    <Compile Include="Core\FormGameCreator.cs">
+    <Compile Include="Models\GameResult.cs" />
+    <Compile Include="Models\Statistic.cs" />
+    <Compile Include="UI\FormGameManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Core\FormGameCreator.Designer.cs">
-      <DependentUpon>FormGameCreator.cs</DependentUpon>
+    <Compile Include="UI\FormGameManager.Designer.cs">
+      <DependentUpon>FormGameManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\GameDirection.cs" />
     <Compile Include="Enums\GameColor.cs" />
@@ -77,6 +78,18 @@
     <Compile Include="Models\CellManufacturer.cs" />
     <Compile Include="Models\UserGameTemplate.cs" />
     <Compile Include="Models\UserTemplateCreator.cs" />
+    <Compile Include="UI\Rules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Rules.Designer.cs">
+      <DependentUpon>Rules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Scores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Scores.Designer.cs">
+      <DependentUpon>Scores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CompsMoveEventArgs.cs" />
     <Compile Include="Models\MatrixCell.cs" />
     <Compile Include="Models\PawnManufacturer.cs" />
@@ -95,8 +108,8 @@
     </Compile>
     <Compile Include="Utilities\EndGameEventArguments.cs" />
     <Compile Include="Utilities\GameConstants.cs" />
-    <EmbeddedResource Include="Core\FormGameCreator.resx">
-      <DependentUpon>FormGameCreator.cs</DependentUpon>
+    <EmbeddedResource Include="UI\FormGameManager.resx">
+      <DependentUpon>FormGameManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -108,6 +121,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Rules.resx">
+      <DependentUpon>Rules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Scores.resx">
+      <DependentUpon>Scores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UserDesk.resx">
       <DependentUpon>UserDesk.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +150,8 @@
     <Content Include="Resources\Images\red-pawn.png" />
     <Content Include="Resources\Images\white-pawn.png" />
     <Content Include="Resources\Images\yellow-pawn.png" />
+    <Content Include="Resources\TextFiles\Rules.txt" />
+    <Content Include="Resources\TextFiles\Statistic.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

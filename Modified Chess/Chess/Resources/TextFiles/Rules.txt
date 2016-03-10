@@ -1,0 +1,1 @@
+﻿Pawns move as in normal chess. The figure moves once ahead, if it is not yet moved - two moves ahead are allowed, but without skipping figure. Diagonal movements are permitted - only if you skip another pawn (even if it is yours). The winner is the one who reaches the opposite end of the board.
