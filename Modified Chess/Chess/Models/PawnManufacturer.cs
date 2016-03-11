@@ -1,7 +1,7 @@
 ﻿namespace Chess.Models
 {
-    using Chess.Contracts;
-    using Chess.Enums;
+    using Contracts;
+    using Enums;
 
     public class PawnManufacturer : IPawnManufacturer
     {

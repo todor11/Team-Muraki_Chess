@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Chess.Utilities;
+    using Utilities;
 
     public delegate void EndGameEventHandler(IEngine sender, EndGameEventArguments args);
 

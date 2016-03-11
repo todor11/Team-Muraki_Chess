@@ -1,11 +1,9 @@
 ﻿namespace Chess.Models
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.InteropServices;
 
-    using Chess.Contracts;
-    using Chess.Enums;
+    using Contracts;
+    using Enums;
 
     public class UserTemplateCreator : IGameTemplateCreator
     {
@@ -27,16 +25,17 @@
 
         private int[][] CreateCellTemplate(int numberOfPawns)
         {
-            var cellTemplate = new[] {
-                                                            new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
-                                                            new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
-                                                            new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
-                                                            new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
-                                                            new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
-                                                            new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
-                                                            new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
-                                                            new int[] { 2, 1, 2, 1, 2, 1, 2, 1 }
-                                                            };
+            var cellTemplate = new[] 
+                                    {
+                                    new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
+                                    new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
+                                    new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
+                                    new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
+                                    new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
+                                    new int[] { 2, 1, 2, 1, 2, 1, 2, 1 },
+                                    new int[] { 1, 2, 1, 2, 1, 2, 1, 2 },
+                                    new int[] { 2, 1, 2, 1, 2, 1, 2, 1 }
+                                    };
 
             return cellTemplate;
         }

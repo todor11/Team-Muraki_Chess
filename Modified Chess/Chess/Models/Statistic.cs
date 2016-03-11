@@ -6,12 +6,12 @@
     using System.Linq;
     using System.Text;
 
-    using Chess.Contracts;
-    using Chess.Utilities;
+    using Contracts;
+    using Utilities;
 
     public class Statistic : IStatistic
     {
-        private IList<IGameResult> topResults;
+        private readonly IList<IGameResult> topResults;
          
         public Statistic()
         {

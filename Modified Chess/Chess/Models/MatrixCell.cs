@@ -2,11 +2,12 @@
 {
     using System.Text;
 
-    using Chess.Contracts;
+    using Contracts;
 
     public class MatrixCell : IMatrixCell
     {
-        private StringBuilder roadToFinal;
+        private readonly StringBuilder roadToFinal;
+
         public MatrixCell(int row, int col, int step, string roadToFinal)
         {
             this.Row = row;

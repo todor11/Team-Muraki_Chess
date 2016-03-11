@@ -73,7 +73,7 @@
             this.buttonOK3.TabIndex = 54;
             this.buttonOK3.Text = "OK";
             this.buttonOK3.UseVisualStyleBackColor = true;
-            this.buttonOK3.Click += new System.EventHandler(this.buttonOK3_Click);
+            this.buttonOK3.Click += new System.EventHandler(this.ButtonOk3Click);
             // 
             // buttonOK2
             // 
@@ -83,7 +83,7 @@
             this.buttonOK2.TabIndex = 53;
             this.buttonOK2.Text = "OK";
             this.buttonOK2.UseVisualStyleBackColor = true;
-            this.buttonOK2.Click += new System.EventHandler(this.buttonOK2_Click);
+            this.buttonOK2.Click += new System.EventHandler(this.ButtonOk2Click);
             // 
             // buttonOK1
             // 
@@ -93,7 +93,7 @@
             this.buttonOK1.TabIndex = 52;
             this.buttonOK1.Text = "OK";
             this.buttonOK1.UseVisualStyleBackColor = true;
-            this.buttonOK1.Click += new System.EventHandler(this.buttonOK1_Click);
+            this.buttonOK1.Click += new System.EventHandler(this.ButtonOk1Click);
             // 
             // groupBoxP4
             // 
@@ -305,7 +305,7 @@
             this.StartButton.TabIndex = 47;
             this.StartButton.Text = "Restart game";
             this.StartButton.UseVisualStyleBackColor = false;
-            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
+            this.StartButton.Click += new System.EventHandler(this.StartButtonClick);
             // 
             // ColorLabel
             // 
@@ -382,7 +382,7 @@
             this.ExitButton.TabIndex = 55;
             this.ExitButton.Text = "Exit Game";
             this.ExitButton.UseVisualStyleBackColor = false;
-            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            this.ExitButton.Click += new System.EventHandler(this.ExitButtonClick);
             // 
             // button1
             // 
@@ -394,7 +394,7 @@
             this.button1.TabIndex = 56;
             this.button1.Text = "View Rules";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1Click);
             // 
             // groupBox1
             // 
@@ -434,7 +434,7 @@
             this.ViewScoresButton.TabIndex = 56;
             this.ViewScoresButton.Text = "View best scores";
             this.ViewScoresButton.UseVisualStyleBackColor = false;
-            this.ViewScoresButton.Click += new System.EventHandler(this.button2_Click);
+            this.ViewScoresButton.Click += new System.EventHandler(this.Button2Click);
             // 
             // FormGameManager
             // 

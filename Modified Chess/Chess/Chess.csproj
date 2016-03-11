@@ -61,7 +61,6 @@
     <Compile Include="Contracts\IPawn.cs" />
     <Compile Include="Contracts\IGameTemplate.cs" />
     <Compile Include="Contracts\IStatistic.cs" />
-    <Compile Include="Contracts\ITemplateManufacturer.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Models\GameResult.cs" />
     <Compile Include="Models\Statistic.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Contracts\IPawnManufacturer.cs" />
     <Compile Include="Models\Pawn.cs" />
-    <Compile Include="Models\GameTemplate.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\UserDesk.cs">

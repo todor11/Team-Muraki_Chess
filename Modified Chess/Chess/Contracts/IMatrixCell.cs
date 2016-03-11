@@ -1,7 +1,5 @@
 ﻿namespace Chess.Contracts
 {
-    using System.Text;
-    
     public interface IMatrixCell
     {
         int Row { get; set; }

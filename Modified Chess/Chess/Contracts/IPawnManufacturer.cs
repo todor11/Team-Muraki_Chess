@@ -1,7 +1,6 @@
 ﻿namespace Chess.Contracts
 {
-    using Chess.Enums;
-    using Chess.Models;
+    using Enums;
 
     public interface IPawnManufacturer
     {

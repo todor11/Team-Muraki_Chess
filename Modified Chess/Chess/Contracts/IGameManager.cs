@@ -1,8 +1,6 @@
 ﻿namespace Chess.Contracts
 {
-    using System.Collections.Generic;
-
-    using Chess.Enums;
+    using Enums;
 
     public interface IGameManager
     {

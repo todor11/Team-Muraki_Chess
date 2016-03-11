@@ -1,6 +1,6 @@
 ﻿namespace Chess.Models
 {
-    using Chess.Contracts;
+    using Contracts;
 
     public class GameResult : IGameResult
     {

@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chess.Atributes;
-    using Chess.Contracts;
-    using Chess.Enums;
-    using Chess.Utilities;
+    using Atributes;
+    using Contracts;
+    using Enums;
+    using Utilities;
 
     [ArtificialIntelect]
     public class AI : Player, IArtificialIntelect
@@ -46,7 +46,7 @@
 
             if (this.winningPawns.Count > 0)
             {
-                int minStep = Int32.MaxValue;
+                int minStep = int.MaxValue;
                 IPawn winner = this.Pawns[0];
                 foreach (var pawn in this.winningPawns.Keys)
                 {
@@ -78,7 +78,7 @@
                 if (this.ComputersMove != null)
                 {
                     this.ComputersMove(this, new CompsMoveEventArgs( 
-                        new int[] { winningCellFrom.Row, winningCellFrom.Col, cellToRow, cellToCol }));
+                        new[] { winningCellFrom.Row, winningCellFrom.Col, cellToRow, cellToCol }));
                 }
 
                 this.Engine.MovePawnFromTo(winningCellFrom, winningCellTo);
@@ -93,7 +93,7 @@
 
                 if (this.ComputersMove != null)
                 {
-                    this.ComputersMove(this, new CompsMoveEventArgs(new int[] { cellFrom.Row, cellFrom.Col, cellTo.Row, cellTo.Col }));
+                    this.ComputersMove(this, new CompsMoveEventArgs(new[] { cellFrom.Row, cellFrom.Col, cellTo.Row, cellTo.Col }));
                 }
 
                 this.Engine.MovePawnFromTo(cellFrom, cellTo);
@@ -250,25 +250,25 @@
 
         private void CreatePosibleCellDictionary()
         {
-            this.posibleCell[GameDirection.Down] = new int[][]
+            this.posibleCell[GameDirection.Down] = new[]
                                                        {
-                                                           new int[] { 2, 1, 2, 1, 2, 1 },
-                                                           new int[] { 0, 0, -2, -1, 2, 1 }
+                                                           new[] { 2, 1, 2, 1, 2, 1 },
+                                                           new[] { 0, 0, -2, -1, 2, 1 }
                                                        };
-            this.posibleCell[GameDirection.Up] = new int[][]
+            this.posibleCell[GameDirection.Up] = new[]
                                                        {
-                                                           new int[] { -2, -1, -2, -1, -2, -1 },
-                                                           new int[] { 0, 0, -2, -1, 2, 1 }
+                                                           new[] { -2, -1, -2, -1, -2, -1 },
+                                                           new[] { 0, 0, -2, -1, 2, 1 }
                                                        };
-            this.posibleCell[GameDirection.Left] = new int[][]
+            this.posibleCell[GameDirection.Left] = new[]
                                                        {
-                                                           new int[] { 0, 0, -2, -1, 2, 1 },
-                                                           new int[] { -2, -1, -2, -1, -2, -1 }
+                                                           new[] { 0, 0, -2, -1, 2, 1 },
+                                                           new[] { -2, -1, -2, -1, -2, -1 }
                                                        };
-            this.posibleCell[GameDirection.Right] = new int[][]
+            this.posibleCell[GameDirection.Right] = new[]
                                                        {
-                                                           new int[] { 0, 0, -2, -1, 2, 1 },
-                                                           new int[] { 2, 1, 2, 1, 2, 1 }
+                                                           new[] { 0, 0, -2, -1, 2, 1 },
+                                                           new[] { 2, 1, 2, 1, 2, 1 }
                                                        };
         }
     }

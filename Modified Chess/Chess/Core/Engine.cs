@@ -1,14 +1,16 @@
 ﻿namespace Chess.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
-    using Chess.Contracts;
-    using Chess.Enums;
-    using Chess.Atributes;
-    using Chess.Utilities;
+    using Atributes;
+
+    using Contracts;
+
+    using Enums;
+
+    using Utilities;
 
     public class Engine : IEngine
     {

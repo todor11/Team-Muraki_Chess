@@ -1,8 +1,6 @@
 ﻿namespace Chess.Contracts
 {
-    using System;
-
-    using Chess.Enums;
+    using Enums;
 
     public interface IGameTemplateCreator
     {

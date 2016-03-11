@@ -1,10 +1,9 @@
 ﻿namespace Chess.Models
 {
-    using System.Collections.Generic;
     using System.Linq;
 
-    using Chess.Contracts;
-    using Chess.Enums;
+    using Contracts;
+    using Enums;
 
     public class GameBoard : IGameBoard
     {

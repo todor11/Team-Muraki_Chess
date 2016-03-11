@@ -7,17 +7,17 @@
     using System.Reflection;
     using System.Windows.Forms;
 
-    using Chess.Contracts;
-    using Chess.Core;
-    using Chess.Enums;
-    using Chess.Models;
-    using Chess.Utilities;
+    using Contracts;
+    using Core;
+    using Enums;
+    using Models;
+    using Utilities;
 
     public partial class FormGameManager : Form, IGameManager
     {
         private const int NumberOfGameColors = 4;
 
-        private readonly Dictionary<string, Type> RaceTypeDictionary;
+        private readonly Dictionary<string, Type> raceTypeDictionary;
 
         private IEngine engine;
 
@@ -33,7 +33,7 @@
         {
             this.Statistic = statistic;
             this.TemplateCreator = templateCreator;
-            this.RaceTypeDictionary = new Dictionary<string, Type>();
+            this.raceTypeDictionary = new Dictionary<string, Type>();
             this.GetPlayerTypes();
             this.InitializeComponent();
             this.HideElementsWhenStart();
@@ -72,7 +72,6 @@
 
         public void EndGame()
         {
-
             this.Statistic.SaveStatistic();
             this.Close();
         }
@@ -93,12 +92,12 @@
             var playerType = Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .FirstOrDefault(type => type.Name == "Player");
-            this.RaceTypeDictionary["Human"] = playerType;
+            this.raceTypeDictionary["Human"] = playerType;
 
             var computerType = Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .FirstOrDefault(type => type.Name == "AI");
-            this.RaceTypeDictionary["Computer"] = computerType;
+            this.raceTypeDictionary["Computer"] = computerType;
         }
 
         private void HideElementsWhenStart()
@@ -175,7 +174,7 @@
             }
         }
 
-        private void buttonOK1_Click(object sender, System.EventArgs e)
+        private void ButtonOk1Click(object sender, System.EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.RaceComboBox1.Text) ||
                 ((this.RaceComboBox1.Text != "Human") && (this.RaceComboBox1.Text != "Computer")))
@@ -232,11 +231,11 @@
         {
             if (playerTypeAsString == "Human")
             {
-                this.Players[index] = Activator.CreateInstance(this.RaceTypeDictionary[playerTypeAsString], pawnColor) as Player;
+                this.Players[index] = Activator.CreateInstance(this.raceTypeDictionary[playerTypeAsString], pawnColor) as Player;
             }
             else
             {
-                this.Players[index] = Activator.CreateInstance(this.RaceTypeDictionary[playerTypeAsString], pawnColor) as AI;
+                this.Players[index] = Activator.CreateInstance(this.raceTypeDictionary[playerTypeAsString], pawnColor) as AI;
             }
 
             if (index == 0)
@@ -257,7 +256,7 @@
             }
         }
 
-        private void buttonOK2_Click(object sender, EventArgs e)
+        private void ButtonOk2Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.NamePlayer1.Text))
             {
@@ -297,7 +296,7 @@
             this.buttonOK2.Enabled = false;
         }
 
-        private void buttonOK3_Click(object sender, EventArgs e)
+        private void ButtonOk3Click(object sender, EventArgs e)
         {
             if (!this.freeColorsAsString.Contains(this.ColorComboBox1.Text))
             {
@@ -331,6 +330,7 @@
                 ((this.NumberOfPlayers > 3) && (this.ColorComboBox2.Text == this.ColorComboBox4.Text)))
             {
                 MessageBox.Show("Color must be diffrent");
+
                 return;
             }
 
@@ -356,23 +356,23 @@
             this.StartGame();
         }
 
-        private void ExitButton_Click(object sender, EventArgs e)
+        private void ExitButtonClick(object sender, EventArgs e)
         {
             this.EndGame();
         }
 
-        private void StartButton_Click(object sender, EventArgs e)
+        private void StartButtonClick(object sender, EventArgs e)
         {
             this.StartGame();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1Click(object sender, EventArgs e)
         {
             var rulesForn = new Rules(this.rules);
             rulesForn.Visible = true;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2Click(object sender, EventArgs e)
         {
             var statistic = this.Statistic.GetStatistic();
             var scores = new Scores(statistic);

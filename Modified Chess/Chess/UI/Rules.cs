@@ -11,7 +11,7 @@
             this.richTextBox1.Text = text;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1Click(object sender, EventArgs e)
         {
             this.Close();
         }

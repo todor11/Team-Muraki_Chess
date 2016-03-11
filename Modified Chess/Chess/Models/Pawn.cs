@@ -1,11 +1,9 @@
 ﻿namespace Chess.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
-    using Chess.Contracts;
-    using Chess.Enums;
+    using Contracts;
+    using Enums;
 
     public class Pawn : IPawn
     {
@@ -98,6 +96,7 @@
                     {
                         this.posibleMoves.Add(allCells[currentRow + (int)this.Direction + (int)this.Direction][currentCol + 2]);
                     }
+
                     break;
 
                 case GameDirection.Left:
@@ -131,6 +130,7 @@
                     {
                         this.posibleMoves.Add(allCells[currentRow + 2][currentCol + direction + direction]);
                     }
+
                     break;
             }
         }

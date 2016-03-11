@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    using Chess.Contracts;
-    using Chess.Enums;
+    using Contracts;
+    using Enums;
 
     public class Player : IGamePlayer
     {
