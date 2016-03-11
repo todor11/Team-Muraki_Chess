@@ -17,6 +17,10 @@
     {
         private const int NumberOfGameColors = 4;
 
+        private const string PlayerLabel = "Human";
+
+        private const string ComputerLabel = "Computer";
+
         private readonly Dictionary<string, Type> raceTypeDictionary;
 
         private IEngine engine;
@@ -92,12 +96,12 @@
             var playerType = Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .FirstOrDefault(type => type.Name == "Player");
-            this.raceTypeDictionary["Human"] = playerType;
+            this.raceTypeDictionary[PlayerLabel] = playerType;
 
             var computerType = Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .FirstOrDefault(type => type.Name == "AI");
-            this.raceTypeDictionary["Computer"] = computerType;
+            this.raceTypeDictionary[ComputerLabel] = computerType;
         }
 
         private void HideElementsWhenStart()
@@ -177,28 +181,28 @@
         private void ButtonOk1Click(object sender, System.EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.RaceComboBox1.Text) ||
-                ((this.RaceComboBox1.Text != "Human") && (this.RaceComboBox1.Text != "Computer")))
+                ((this.RaceComboBox1.Text != PlayerLabel) && (this.RaceComboBox1.Text != ComputerLabel)))
             {
                 MessageBox.Show("For Player 1 race,  choose one of drop down menu race!");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(this.RaceComboBox2.Text) ||
-                ((this.RaceComboBox2.Text != "Human") && (this.RaceComboBox2.Text != "Computer")))
+                ((this.RaceComboBox2.Text != PlayerLabel) && (this.RaceComboBox2.Text != ComputerLabel)))
             {
                 MessageBox.Show("For Player 2 race, choose one of drop down menu race!");
                 return;
             }
 
             if ((this.NumberOfPlayers > 2) && (string.IsNullOrWhiteSpace(this.RaceComboBox3.Text) ||
-                ((this.RaceComboBox3.Text != "Human") && (this.RaceComboBox3.Text != "Computer"))))
+                ((this.RaceComboBox3.Text != PlayerLabel) && (this.RaceComboBox3.Text != ComputerLabel))))
             {
                 MessageBox.Show("For Player 3 race,  choose one of drop down menu race!");
                 return;
             }
 
             if ((this.NumberOfPlayers > 3) && (string.IsNullOrWhiteSpace(this.RaceComboBox4.Text) ||
-                ((this.RaceComboBox4.Text != "Human") && (this.RaceComboBox4.Text != "Computer"))))
+                ((this.RaceComboBox4.Text != PlayerLabel) && (this.RaceComboBox4.Text != ComputerLabel))))
             {
                 MessageBox.Show("For Player 4 race,  choose one of drop down menu race!");
                 return;
@@ -216,6 +220,30 @@
             this.NamePlayer3.Visible = true;
             this.NamePlayer4.Visible = true;
             this.buttonOK2.Visible = true;
+
+            if (this.RaceComboBox1.Text == ComputerLabel)
+            {
+                this.NamePlayer1.Text = ComputerLabel;
+                this.NamePlayer1.Enabled = false;
+            }
+
+            if (this.RaceComboBox2.Text == ComputerLabel)
+            {
+                this.NamePlayer2.Text = ComputerLabel;
+                this.NamePlayer2.Enabled = false;
+            }
+
+            if (this.RaceComboBox3.Text == ComputerLabel)
+            {
+                this.NamePlayer3.Text = ComputerLabel;
+                this.NamePlayer3.Enabled = false;
+            }
+
+            if (this.RaceComboBox4.Text == ComputerLabel)
+            {
+                this.NamePlayer4.Text = ComputerLabel;
+                this.NamePlayer4.Enabled = false;
+            }
         }
 
         private void GetRules()
@@ -229,7 +257,7 @@
 
         private void CreatePlayer(string playerTypeAsString, int index, GameColor pawnColor)
         {
-            if (playerTypeAsString == "Human")
+            if (playerTypeAsString == PlayerLabel)
             {
                 this.Players[index] = Activator.CreateInstance(this.raceTypeDictionary[playerTypeAsString], pawnColor) as Player;
             }

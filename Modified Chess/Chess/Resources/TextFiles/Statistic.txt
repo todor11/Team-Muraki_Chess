@@ -1,6 +1,8 @@
-petyr     - 9
-ngfnfgnf    - 10
-mhmjhm   - 10
-ghgh  - 10
-todor - 11
-ivan     - 14
+petyr       - 9
+ngfnfgnf      - 10
+mhmjhm     - 10
+ghgh    - 10
+todor   - 11
+todor  - 11
+ivan       - 14
+ivan - 17

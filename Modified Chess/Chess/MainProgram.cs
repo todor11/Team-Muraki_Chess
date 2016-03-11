@@ -3,10 +3,9 @@
     using System;
     using System.Windows.Forms;
     
-    using Chess.Models;
-    using Chess.UI;
+    using Models;
+    using UI;
     
-
     public static class MainProgram
     {
         /// <summary>
